@@ -41,14 +41,15 @@ Design fails when:
 * Principles are applied inappropriately.
 * Patterns are misapplied (see and use patterns where none exist).
 * The act of design is separated from the act of programming.
-    * __ Follow__ Agile, __NOT__ Big Up Front Design (BUFD)
+    * __Follow__ Agile, __NOT__ Big Up Front Design (BUFD)
 
 ### When to Design
 * __Do__ Agile Software development.
 * __Don't do__ Big Up Front Design (BUFD).
     * Designs in BUFD cannot possibly be correct as many things will change during the act of programming.
     * BUFD inevitable leads to an adversarial relationship between customers and programmers.
-* Make design decisions only when you must with the information you have at that time (don't make decisions prematurely).
+* Make design decisions only when you must with the information you have at that time (postpone decisions until you are absolutely forced to make them).
+    - Any decision you make in advance on an explicit requirement is just a guess. Preserve your ability to make a decision _later_.
 
 ### Judging Design
 There are multiple metrics to help you measure how well your code follows OOD principles. Take into account the following:
@@ -95,3 +96,18 @@ Never call @variables inside methods = user wrapper methods instead.
 #### Hide Data Structures
 If the class uses complex data structures = Write wrapper methods that decipher the structure and depend on those methods.
 [Wrong Code Example](code_examples/chapter_2.rb#L105-117) / [Right Code Example](code_examples/chapter_2.rb#L124-141)
+
+### Enforce Single Responsibility Everywhere
+
+#### Extract Extra Responsibilites from Methods
+* Methods with single responsibility have these benefits:
+    * Clarify what the class does.
+    * Avoid the need for comments.
+    * Encourage reuse.
+    * Easy to move to another class (if needed).
+* Same techniques as for classes work ([See techniques](#determining-if-a-class-has-a-single-responsibility)).
+* Separate iteration from action (common case of single responsibility violation in methods).
+
+#### Isolate Extra Responsibilites in Classes
+If you are not sure if you will need another class but have identified a class with an extra responsibility, __isolate it__ ([Example using Struct.](code_examples/chapter_2.rb#177-197))
+
