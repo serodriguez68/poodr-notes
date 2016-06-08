@@ -1,6 +1,5 @@
 # Practical Object-Oriented Design in  Ruby - Notes
-Notes by: __[Sergio Rodriguez](https://github.com/serodriguez68 "Sergio's Github")__
-Book by: __[Sandi Metz](https://github.com/skmetz "Sandi's Github")__
+Notes by: __[Sergio Rodriguez](https://github.com/serodriguez68 "Sergio's Github")__ / Book by: __[Sandi Metz](https://github.com/skmetz "Sandi's Github")__
 
 __These are some notes I took while reading the book. Feel free to send me a pull request if you want to make an improvement.__
 _______________________________________________________________________________
@@ -18,14 +17,14 @@ _______________________________________________________________________________
 ## The Tools of Design
 ### Design Principles
 * [SOLID Design](http://en.wikipedia.org/wiki/SOLID_(object-oriented_design))
-    * **Single Responsibility Principle:** a class should have only a single responsibility. [(See Ch2)](#chapter-2-designing-classes-with-a-single-responsibility).
+    * **Single Responsibility Principle:** a class should have only a single responsibility. [(See Ch2)](#chapter-2---designing-classes-with-a-single-responsibility).
     * **Open-Closed:** Software entities should be open for extension, but closed for modification (inherit instead of modifying existing classes).
     * **Liskov Substitution:** Objects in a program should be replaceable with instances of their subtypes without altering the correctness of that program.
-    <!-- Check Sergio: add internal link -->
+    <!-- WIP: add internal link -->
     * **Interface Segregation:** Many client-specific interfaces are better than one general-purpose interface.
-    <!-- Check Sergio: add internal link -->
+    <!-- WIP: add internal link -->
     * **Dependency Inversion:** Depend upon Abstractions. Do not depend upon concretions.
-    <!-- Check Sergio: add link to dependency inversion -->
+    <!-- WIP: add link to dependency inversion -->
 * **Don't Repeat Yourself:** Every piece of knowledge must have a single, unambiguous, authoritative representation within a system.
 * **Law of Demeter:** A given object should assume as little as possible about the structure or properties of anything else.
 
@@ -91,8 +90,8 @@ _______________________________________________________________________________
 
 #### Hide Instance Variables
 Never call @variables inside methods = user wrapper methods instead. 
-[Wrong Code Example](https://github.com/skmetz/poodr/blob/master/chapter_2.rb#L61-71) / [Right Code Example](https://github.com/skmetz/poodr/blob/master/chapter_2.rb#L73-102)
+[Wrong Code Example](code_examples/chapter_2.rb#L61-71) / [Right Code Example](code_examples/chapter_2.rb#L73-102)
 
 #### Hide Data Structures
 If the class uses complex data structures = Write wrapper methods that decipher the structure and depend on those methods.
-[Wrong Code Example](https://github.com/skmetz/poodr/blob/master/chapter_2.rb#L105-117) / [Right Code Example](https://github.com/skmetz/poodr/blob/master/chapter_2.rb#L124-141)
+[Wrong Code Example](code_examples/chapter_2.rb#L105-117) / [Right Code Example](code_examples/chapter_2.rb#L124-141)
