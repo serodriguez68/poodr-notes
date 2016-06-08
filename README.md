@@ -109,5 +109,5 @@ If the class uses complex data structures = Write wrapper methods that decipher 
 * Separate iteration from action (common case of single responsibility violation in methods).
 
 #### Isolate Extra Responsibilites in Classes
-If you are not sure if you will need another class but have identified a class with an extra responsibility, __isolate it__ ([Example using Struct.](code_examples/chapter_2.rb#177-197))
+If you are not sure if you will need another class but have identified a class with an extra responsibility, __isolate it__ ([Example using Struct.](code_examples/chapter_2.rb#L177-197))
 
