@@ -110,4 +110,26 @@ If the class uses complex data structures = Write wrapper methods that decipher 
 
 #### Isolate Extra Responsibilites in Classes
 If you are not sure if you will need another class but have identified a class with an extra responsibility, __isolate it__ ([Example using Struct.](code_examples/chapter_2.rb#L176-197))
+_______________________________________________________________________________
+# Chapter 3 - Managing Dependencies
+## Recognizing Dependencies
+An object has a dependency when it knows ([See example code](code_examples/chapter_3.rb#L2-34)): 
+
++ The name of another class. _(Gear expects a class named Wheet to exist.)_
+    * Solution strategy 1: __[Dependency Injection]()__
+    * Solution strategy 2: __[Isolate Instance Creation]()__
++ The name of the message that it intends to send to someone other than self. (_Gear expects a Wheel instance to respond to diameter_).
+    * Solution strategy 1: __[Reversing Dependencies]()__
+    * Solution strategy 2: __[Isolate Vurnerable External Messages]()__
++ The arguments that a message requires. _(Gear knows that Wheel.new requires rim and title.)_
+    * Mostly unavoidable dependency.
+    * In some cases default values of arguments might help.
++ The order of those arguments. _(Gear knows the first argument to Wheel.new should be 'rim', 'tire' second.)_
+    * Solution Strategy 1: __[Use Hashes for initialization arguments]()__
+    * Solution Strategy 2: __[Use Default Values]()__
+    * Solution Strategy 3: __[Isolate Multiparameter Initialization]()__
+        - When you can't change the original method (e.g when using an external interface).
+
+
+
 
