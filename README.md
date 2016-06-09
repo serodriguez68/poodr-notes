@@ -115,21 +115,56 @@ _______________________________________________________________________________
 ## Recognizing Dependencies
 An object has a dependency when it knows ([See example code](code_examples/chapter_3.rb#L2-34)): 
 
-+ The name of another class. _(Gear expects a class named Wheet to exist.)_
-    * Solution strategy 1: __[Dependency Injection]()__
-    * Solution strategy 2: __[Isolate Instance Creation]()__
-+ The name of the message that it intends to send to someone other than self. (_Gear expects a Wheel instance to respond to diameter_).
+1. The name of another class. _(Gear expects a class named Wheet to exist.)_
+    * Solution strategy 1: __[Inject Dependencies](#inject-dependencies)__
+    * Solution strategy 2: __[Isolate Instance Creation](#isolate-instance-creation)__
+2. The name of the message that it intends to send to someone other than self. (_Gear expects a Wheel instance to respond to diameter_).
     * Solution strategy 1: __[Reversing Dependencies]()__
-    * Solution strategy 2: __[Isolate Vurnerable External Messages]()__
-+ The arguments that a message requires. _(Gear knows that Wheel.new requires rim and title.)_
+        - Avoids the problem from the beginning, but it is not always possible.
+    * Solution strategy 2: __[Isolate Vurnerable External Messages](#isolate-vulnerable-external-messages)__
+3. The arguments that a message requires. _(Gear knows that Wheel.new requires rim and title.)_
     * Mostly unavoidable dependency.
-    * In some cases default values of arguments might help.
-+ The order of those arguments. _(Gear knows the first argument to Wheel.new should be 'rim', 'tire' second.)_
-    * Solution Strategy 1: __[Use Hashes for initialization arguments]()__
-    * Solution Strategy 2: __[Use Default Values]()__
+    * In some cases [default values](#explicitly-define-defaults) of arguments might help.
+4. The order of those arguments. _(Gear knows the first argument to Wheel.new should be 'rim', 'tire' second.)_
+    * Solution Strategy 1: __[Use Hashes for initialization arguments](#use-hashes-for-initialization-arguments)__
+    * Solution Strategy 2: __[Use Default Values](#explicitly-define-defaults)__
     * Solution Strategy 3: __[Isolate Multiparameter Initialization]()__
         - When you can't change the original method (e.g when using an external interface).
+        
+\*_You may combine solution strategies if it makes sense._
 
+>Some degree of dependency is inevitable, however most dependencies are unnecessary.
 
+## Solution Strategies
+### Inject Dependencies
+Instead of explicitly calling another class' name inside a method, pass the instance of the other class as an argument to the method.
+[Wrong Code Example](code_examples/chapter_3.rb#L37-52) / [Right Code Example](code_examples/chapter_3.rb#L55-67)
 
+### Isolate Instance Creation
+Use this if you can't get rid of "_the name of another class_" dependency type through dependency injection.
 
++ Technique 1: __Move external class name call to the initialize method.__ ([Example code](code_examples/chapter_3.rb#L73-83))
++ Technique 2: __Isolate external class call in explicit defined method.__ ([Example code](code_examples/chapter_3.rb#L87-102))
+
+### Isolate Vulnerable External Messages
+> For messages sent to someone other than _self_.
+
+Not every exteral method is a candidate for isolation. External methods become candidates when the dependency becomes dangerous. For example:
+
++ The external method is burried inside other complex code.
++ There are multiple calls to the external methods inside the class.
+
+[Wrong Code Example](code_examples/chapter_3.rb#L111-115) / [Right Code Example](code_examples/chapter_3.rb#L118-126)
+
+### Use Hashes for Initialization Arguments
++ You will be changing the argument order dependency for an argument name dependency.
+    * Not a problem: argument name is more stable and provides explicit documentation of arguments.
++ The use of these technique depends on the case:
+    * For very simple methods you are better off accepting the argument order dependency.
+    * For complex method signatures, hashes are best.
+    * There are many cases in between where some arguments are required as stable (dependent on order) and some are less stable or optional (dependent on names by hash).  This is fine.
+
+[Wrong Code Example](code_examples/chapter_3.rb#L129-137) / [Right Code Example](code_examples/chapter_3.rb#L145-158)
+
+### Explicitly Define Defaults
+_Work in progress_
