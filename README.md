@@ -164,7 +164,7 @@ Not every exteral method is a candidate for isolation. External methods become c
     * For complex method signatures, hashes are best.
     * There are many cases in between where some arguments are required as stable (dependent on order) and some are less stable or optional (dependent on names by hash).  This is fine.
 
-[Wrong Code Example](code_examples/chapter_3.rb#L129-137) / [Right Code Example](code_examples/chapter_3.rb#L145-158)
+[Wrong Code Example](code_examples/chapter_3.rb#L129-142) / [Right Code Example](code_examples/chapter_3.rb#L145-158)
 
 ### Explicitly Define Defaults
 _Work in progress_
