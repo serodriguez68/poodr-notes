@@ -197,6 +197,7 @@ You could write a version of the code were _KlassB_ depends con _KlassA_.
 + Changing a class that has many dependents will result in widespread consequences.
     * A class that if changed causes a catastrophy has enourmous pressure to _never_ change.
     * Your app may be forever handicapped because of having such types of classes.
+
 #### Finding Dependencies that Matter
 Not all dependencies are harmful. Use the following framework to organize your thoughts and help you find which of your classes are dangerous.
 
