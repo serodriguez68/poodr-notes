@@ -119,7 +119,7 @@ An object has a dependency when it knows ([See example code](code_examples/chapt
     * Solution strategy 1: __[Inject Dependencies](#inject-dependencies)__
     * Solution strategy 2: __[Isolate Instance Creation](#isolate-instance-creation)__
 2. The name of the message that it intends to send to someone other than self. (_Gear expects a Wheel instance to respond to diameter_).
-    * Solution strategy 1: __[Reversing Dependencies]()__
+    * Solution strategy 1: __[Reversing Dependencies](#reversing-dependencies)__
         - Avoids the problem from the beginning, but it is not always possible.
     * Solution strategy 2: __[Isolate Vurnerable External Messages](#isolate-vulnerable-external-messages)__
 3. The arguments that a message requires. _(Gear knows that Wheel.new requires rim and title.)_
@@ -182,3 +182,22 @@ For methods where you can't change the order of arguments (e.g external interfac
     * FYI: objects whose purpose is to create other objects are called _factories_.
 +  Use a _module_, __not__ a Class because you don't expect to create instances of the module.
 
+### Reversing dependencies
+Imagine the case where _KlassA_ depends on _KlassB_. This is where _KlassA_ instanciates _KlassB_ or calls methods from _KlassB_.
+
+You could write a version of the code were _KlassB_ depends con _KlassA_.
+[Gear depends on Wheel Sample](code_examples/chapter_3.rb#L2-34) / [Wheel depends on Gear Sample](code_examples/chapter_3.rb#L264-300) 
+
+#### Choosing Dependency Direction
+> Depend on things that change less often than you do.
+
++ Some classes are more likely than others to have changes in requirements.
+    * You can rank the likelihood of change of any classes you are using regardless of their origin (internal or external). This will help you to make decissions.
++ Concrete classes are more likely to change than abstract classes.
++ Changing a class that has many dependents will result in widespread consequences.
+    * A class that if changed causes a catastrophy has enourmous pressure to _never_ change.
+    * Your app may be forever handicapped because of having such types of classes.
+#### Finding Dependencies that Matter
+Not all dependencies are harmful. Use the following framework to organize your thoughts and help you find which of your classes are dangerous.
+
+<img src="/images/ch3_likelihood_of_change_vs_dependents.png" width="450"/>
