@@ -128,7 +128,7 @@ An object has a dependency when it knows ([See example code](code_examples/chapt
 4. The order of those arguments. _(Gear knows the first argument to Wheel.new should be 'rim', 'tire' second.)_
     * Solution Strategy 1: __[Use Hashes for initialization arguments](#use-hashes-for-initialization-arguments)__
     * Solution Strategy 2: __[Use Default Values](#explicitly-define-defaults)__
-    * Solution Strategy 3: __[Isolate Multiparameter Initialization]()__
+    * Solution Strategy 3: __[Isolate Multiparameter Initialization](#isolate-multiparameter-initialization)__
         - When you can't change the original method (e.g when using an external interface).
         
 \*_You may combine solution strategies if it makes sense._
@@ -167,4 +167,18 @@ Not every exteral method is a candidate for isolation. External methods become c
 [Wrong Code Example](code_examples/chapter_3.rb#L129-142) / [Right Code Example](code_examples/chapter_3.rb#L145-158)
 
 ### Explicitly Define Defaults
-_Work in progress_
++ __Simple non-boolean defaults:__ '_||_' ([Code Sample](code_examples/chapter_3.rb#L161-166))
+    * Problem: you can't set an attribute to _nil_ or _false_ because the fallback value will take over.
++ __Hash as argument with simple defaults:__ _fetch_ ([Code Sample](code_examples/chapter_3.rb#L169-174))
+    * _Fetch_ depends on the __existence__ of the key.  If the key is not present, it returns the fallback value.
+        - This means that attributes can be set to _nil_ and _false_, without the fallback value taking over.
++ __Hash as argument with complex defaults:__ _defaults method + merge_ ([Code Sample](code_examples/chapter_3.rb#L177-186))
+    * The _defaults_ method is an independent method that handles the complex logic for defaults and returns a hash.  This hash is then merged to the actual _arguments hash_.
+
+### Isolate Multiparameter Initialization 
+For methods where you can't change the order of arguments (e.g external interfaces).
+
++ Wrap the external interface in a _module_ whose sole purpose is to create objects from the external dependency. ([Code Sample](code_examples/chapter_3.rb#L189-209))
+    * FYI: objects whose purpose is to create other objects are called _factories_.
++  Use a _module_, __not__ a Class because you don't expect to create instances of the module.
+
