@@ -200,4 +200,4 @@ You could write a version of the code were _KlassB_ depends con _KlassA_.
 #### Finding Dependencies that Matter
 Not all dependencies are harmful. Use the following framework to organize your thoughts and help you find which of your classes are dangerous.
 
-<img src="/images/ch3_likelihood_of_change_vs_dependents.png" width="450"/>
+<img src="/images/ch_3_likelihood_of_change_vs_dependents.png" width="450"/>
