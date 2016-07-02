@@ -201,4 +201,56 @@ You could write a version of the code were _KlassB_ depends con _KlassA_.
 #### Finding Dependencies that Matter
 Not all dependencies are harmful. Use the following framework to organize your thoughts and help you find which of your classes are dangerous.
 
-<img src="/images/ch_3_likelihood_of_change_vs_dependents.png" width="600"/>
+<img src="/images/ch3_likelihood_of_change_vs_dependents.png" width="600"/>
+
+_______________________________________________________________________________
+# Chapter 4 - Creating Flexible Interfaces
+_Flexible interfaces: message based design, not class based design_
+>The conversation between objects takes place using their _public interfaces_.
+
+## Bad vs Good Interfaces 
+__ *(Original: Understanding Interfaces)* __
+
+<img src="/images/ch4_communication_patterns.png" width="600"/>
+
++ __Bad interface structure:__
+    * Objects expose too much of themselves.
+    * Objects know too much about neighbours.
+    * __Result__: They do only the thing the are able to do right now.
+
+> This design issue is not necessarily a failure of dependency injection or single responsibility. Those techniques, while necessary, are not enough to prevent the construction of an application whose design causes you pain. The roots of this new problem lie not in what each class _does_ but with what it _reveals_. 
+    
++ __Good interface structure:__
+    * Objects reveals as little of themselves as possible.
+    * Objects know as little of their neighbours as possible.
+    * __Result__: plug-able, component-like objects.
+
+##  Defining interfaces
+>On a restaurant the kitchen does many things but does not, expose them all to its customers. It has a __public__ interface that customers are expected to use; the menu. Within the kitchen many things happen, many other messages get passed, but these messages are __private__ and thus invisible to customers. Even though they may have ordered it, customers are not welcome to come in and stir the soup.
+
+>The menu lets customers ask for __what__ they want without knowing anything about __how__ the kitchen makes it.
+
+### Public Interfaces
++ Reveals the class' primary responsibility.
+    * The public interface should correspond to the class' responsibility. A single responsibility may require multiple public methods. However, too many loosely related public methods can be a sign of __single responsibility violation.__
++ Are expected to be invoked by others.
++ Will not change on a whim.
++ Are safe for other to depend on.
+    * (Depend on _less_ changebale things)
++ Are thoroughly documented in tests.
+
+### Private Interfaces
++ Handle implementation details (utility methods only meant to be used internally).
++ Are not expected to be sent by other objects.
++ Can change for any reason whatsoever 
+    * (And it's safe for them to change as the public interface should remain stable).
++ Are unsafe for others to depend on.
++ May not even be referenced in tests.
+
+## Finding a good public interface
+__ *(Original: Finding the public interface)* __
+
+__Focus on messages, NOT domain objects (classes)__
+
+>Design experts notice domain objects without concentrating on them; they focus not on these objects but on the messages that pass between them. These messages are guides that lead you to discover other objects, ones that are just as necessary but far less obvious.
+
