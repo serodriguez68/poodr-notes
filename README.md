@@ -74,7 +74,7 @@ _______________________________________________________________________________
     * The easiest way to make a change is to add code that in itself is easy to change (Exemplary code).
     
 ## Creating classes with single responsibility
-* A class __must__ have __data__ and __behaviour__ (methods).  If one of these is missing, the code doesn't belong to a class.
+* A class __must__ have __data__ and __behavior__ (methods).  If one of these is missing, the code doesn't belong to a class.
 
 ### Determining if a class has a single responsibility
 * __Technique 1: Ask questions for each of it's methods.__
@@ -87,7 +87,7 @@ _______________________________________________________________________________
 
 ## Writing Code that Embraces Change
 
-### Depend on behaviour (methods), Not Data
+### Depend on behavior (methods), Not Data
 
 #### Hide Instance Variables
 Never call @variables inside methods = user wrapper methods instead. 
@@ -99,7 +99,7 @@ If the class uses complex data structures = Write wrapper methods that decipher 
 
 ### Enforce Single Responsibility Everywhere
 
-#### Extract Extra Responsibilites from Methods
+#### Extract Extra Responsibilities from Methods
 * Methods with single responsibility have these benefits:
     * Clarify what the class does.
     * Avoid the need for comments.
@@ -108,7 +108,7 @@ If the class uses complex data structures = Write wrapper methods that decipher 
 * Same techniques as for classes work ([See techniques](#determining-if-a-class-has-a-single-responsibility)).
 * Separate iteration from action (common case of single responsibility violation in methods).
 
-#### Isolate Extra Responsibilites in Classes
+#### Isolate Extra Responsibilities in Classes
 If you are not sure if you will need another class but have identified a class with an extra responsibility, __isolate it__ ([Example using Struct.](code_examples/chapter_2.rb#L176-197))
 _______________________________________________________________________________
 # Chapter 3 - Managing Dependencies
@@ -121,7 +121,7 @@ An object has a dependency when it knows ([See example code](code_examples/chapt
 2. The name of the message that it intends to send to someone other than self. (_Gear expects a Wheel instance to respond to diameter_).
     * Solution strategy 1: __[Reversing Dependencies](#reversing-dependencies)__
         - Avoids the problem from the beginning, but it is not always possible.
-    * Solution strategy 2: __[Isolate Vurnerable External Messages](#isolate-vulnerable-external-messages)__
+    * Solution strategy 2: __[Isolate Vulnerable External Messages](#isolate-vulnerable-external-messages)__
 3. The arguments that a message requires. _(Gear knows that Wheel.new requires rim and title.)_
     * Mostly unavoidable dependency.
     * In some cases [default values](#explicitly-define-defaults) of arguments might help.
@@ -149,9 +149,9 @@ Use this if you can't get rid of "_the name of another class_" dependency type t
 ### Isolate Vulnerable External Messages
 > For messages sent to someone other than _self_.
 
-Not every exteral method is a candidate for isolation. External methods become candidates when the dependency becomes dangerous. For example:
+Not every external method is a candidate for isolation. External methods become candidates when the dependency becomes dangerous. For example:
 
-+ The external method is burried inside other complex code.
++ The external method is buried inside other complex code.
 + There are multiple calls to the external methods inside the class.
 
 [Wrong Code Example](code_examples/chapter_3.rb#L111-115) / [Right Code Example](code_examples/chapter_3.rb#L118-126)
@@ -183,7 +183,7 @@ For methods where you can't change the order of arguments (e.g external interfac
 +  Use a _module_, __not__ a Class because you don't expect to create instances of the module.
 
 ### Reversing dependencies
-Imagine the case where _KlassA_ depends on _KlassB_. This is where _KlassA_ instanciates _KlassB_ or calls methods from _KlassB_.
+Imagine the case where _KlassA_ depends on _KlassB_. This is where _KlassA_ instantiates _KlassB_ or calls methods from _KlassB_.
 
 You could write a version of the code were _KlassB_ depends con _KlassA_.
 [Gear depends on Wheel Sample](code_examples/chapter_3.rb#L2-34) / [Wheel depends on Gear Sample](code_examples/chapter_3.rb#L264-300) 
@@ -192,10 +192,10 @@ You could write a version of the code were _KlassB_ depends con _KlassA_.
 > Depend on things that change less often than you do.
 
 + Some classes are more likely than others to have changes in requirements.
-    * You can rank the likelihood of change of any classes you are using regardless of their origin (internal or external). This will help you to make decissions.
+    * You can rank the likelihood of change of any classes you are using regardless of their origin (internal or external). This will help you to make decisions.
 + Concrete classes are more likely to change than abstract classes.
 + Changing a class that has many dependents will result in widespread consequences.
-    * A class that if changed causes a catastrophy has enourmous pressure to _never_ change.
+    * A class that if changed causes a catastrophe  has enormous pressure to _never_ change.
     * Your app may be forever handicapped because of having such types of classes.
 
 #### Finding Dependencies that Matter
@@ -215,14 +215,14 @@ __(Original: Understanding Interfaces)__
 
 + __Bad interface structure:__
     * Objects expose too much of themselves.
-    * Objects know too much about neighbours.
+    * Objects know too much about neighbors.
     * __Result__: They do only the thing they are able to do right now.
 
 > This design issue is not necessarily a failure of dependency injection or single responsibility. Those techniques, while necessary, are not enough to prevent the construction of an application whose design causes you pain. The roots of this new problem lie not in what each class _does_ but with what it _reveals_. 
     
 + __Good interface structure:__
     * Objects reveals as little of themselves as possible.
-    * Objects know as little of their neighbours as possible.
+    * Objects know as little of their neighbors as possible.
     * __Result__: plug-able, component-like objects.
 
 ##  Defining interfaces
@@ -236,7 +236,7 @@ __(Original: Understanding Interfaces)__
 + Are expected to be invoked by others.
 + Will not change on a whim.
 + Are safe for other to depend on.
-    * (Depend on _less_ changebale things)
+    * (Depend on _less_ changeable things)
 + Are thoroughly documented in tests.
 
 ### Private Interfaces
