@@ -209,14 +209,14 @@ _Flexible interfaces: message based design, not class based design_
 >The conversation between objects takes place using their _public interfaces_.
 
 ## Bad vs Good Interfaces 
-__ *(Original: Understanding Interfaces)* __
+__(Original: Understanding Interfaces)__
 
 <img src="/images/ch4_communication_patterns.png" width="600"/>
 
 + __Bad interface structure:__
     * Objects expose too much of themselves.
     * Objects know too much about neighbours.
-    * __Result__: They do only the thing the are able to do right now.
+    * __Result__: They do only the thing they are able to do right now.
 
 > This design issue is not necessarily a failure of dependency injection or single responsibility. Those techniques, while necessary, are not enough to prevent the construction of an application whose design causes you pain. The roots of this new problem lie not in what each class _does_ but with what it _reveals_. 
     
@@ -248,9 +248,20 @@ __ *(Original: Understanding Interfaces)* __
 + May not even be referenced in tests.
 
 ## Finding a good public interface
-__ *(Original: Finding the public interface)* __
+__(Original: Finding the public interface)__
 
 __Focus on messages, NOT domain objects (classes)__
 
 >Design experts notice domain objects without concentrating on them; they focus not on these objects but on the messages that pass between them. These messages are guides that lead you to discover other objects, ones that are just as necessary but far less obvious.
 
+### Step 1: Using Sequence Diagrams
+
+ + Lightweight way of acquiring a design intention.
+ + Low cost object arrangement and message passing (public interface) experiments.
+ + Helpful for communicating ideas.
+ + __Keep agile__: use them for exerimenting and communicating. Do NOT do big up-front design.
+ + Value of these diagrams:
+    * __Should this receiver be responsible for responding to this message?__
+    * __I need to send this message, who should respond to it?__
+ 
+ <img src="/images/ch4_simple_sequence_diagram.png" width="600"/>
