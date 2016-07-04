@@ -264,4 +264,13 @@ __Focus on messages, NOT domain objects (classes)__
     * __Should this receiver be responsible for responding to this message?__
     * __I need to send this message, who should respond to it?__
  
- <img src="/images/ch4_simple_sequence_diagram.png" width="600"/>
+ <img src="/images/ch4_simple_sequence_diagram.png" width="400"/>
+
+### Step 2: Asking for 'What' instead of telling 'How'
+
+Better explained through examples: compare novice vs intermediate.
+
+<img src="/images/ch4_novice_vs_intermediate_experienced.png" width="800"/>
+
+
+
