@@ -153,6 +153,7 @@ Not every external method is a candidate for isolation. External methods become 
 
 + The external method is buried inside other complex code.
 + There are multiple calls to the external methods inside the class.
++ The method is part of the [private interface of a external class.](#r3-exercise-caution-when-depending-on-private-interfaces)
 
 [Wrong Code Example](code_examples/chapter_3.rb#L111-115) / [Right Code Example](code_examples/chapter_3.rb#L118-126)
 
@@ -213,14 +214,14 @@ __(Original: Understanding Interfaces)__
 
 <img src="/images/ch4_communication_patterns.png" width="600"/>
 
-+ __Bad interface structure:__
++ __Bad Interface structure:__
     * Objects expose too much of themselves.
     * Objects know too much about neighbors.
     * __Result__: They do only the thing they are able to do right now.
 
 > This design issue is not necessarily a failure of dependency injection or single responsibility. Those techniques, while necessary, are not enough to prevent the construction of an application whose design causes you pain. The roots of this new problem lie not in what each class _does_ but with what it _reveals_. 
     
-+ __Good interface structure:__
++ __Good Interface structure:__
     * Objects reveals as little of themselves as possible.
     * Objects know as little of their neighbors as possible.
     * __Result__: plug-able, component-like objects.
@@ -291,4 +292,39 @@ A message based approach also helps you to find the first thing to assert in a t
 
 <img id="ch4_discovering_objects" src="/images/ch4_discovering_objects.png" width="800"/>
 
+## Writing Code That Puts Its Best (Inter)Face Forward
 
+>Think about interfaces. Create them intentionally. It is your interfaces, more than all of your tests and any of your code, that define your application and determine it’s future.
+
+__The following are rules-of-thumb for creating interfaces:__
+
+### R1. Create Explicit Interfaces
+
++ Method in the __public interface__ should:
+    * Be explicitly identified as such
+    * Be more about _what_ than _how_
+    * Have names that, insofar as you can anticipate, will not change
+    * Take a hash as an options parameter
++ Do not test private methods. If you must, segregate those test from the ones of the public methods
++ In ruby: _public, private, protected keywords_
+    * Use them if you like but take into account that ruby has mechanisims to circumvent them
+    * You are better off using comments or a naming convention for public and private methods than using the keywords
+        - Rails uses a leading '_' for private methods
+
+### R2. Honor the Public Interfaces of Others
+
++ If your design forces the use of a private method in another class, __re-think your design__ (try very hard to find an alternative)
++ A dependency on a private method of an external framework is a form of technical debt
+
+### R3. Exercise Caution When Depending on Private Interfaces
+
++ If you __must__ depend on a private interface, __[isolate the dependency](#isolate-vulnerable-external-messages)__
+    * This will prevent calls from multiple places
+
+### R4. Minimize Context
+
++ Create public methods that allow senders to get __what__ they want without knowing __how__ your class does it
++ If face a class with an ill-defined public interface you have these options (depending on the case):
+    * Option 1. Define a new well defined method for that class' public interface.
+    * Option 2. Create a wrapper class with a well defined public interface.
+    * Option 3. Create a single wrapping method and put it in your own class.
