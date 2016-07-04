@@ -268,9 +268,27 @@ __Focus on messages, NOT domain objects (classes)__
 
 ### Step 2: Asking for 'What' instead of telling 'How'
 
-Better explained through examples: compare novice vs intermediate.
+Better explained through an example: compare novice vs intermediate.
 
-<img src="/images/ch4_novice_vs_intermediate_experienced.png" width="800"/>
+<img id="ch4_novice_vs_intermediate_experienced" src="/images/ch4_novice_vs_intermediate_experienced.png" width="800"/>
 
+### Step 3: Seeking Context Independence
+> Context: The things that a class knows about other objects.  In the [intermediate design example](#ch4_novice_vs_intermediate_experienced), Trip _has_ a single responsibility but _expects_ to be holding onto a _Mechanic_ capable of responding to _prepare bicyble_.
+
++ (+) context = (-) reusability = (-) testability ease
++ Use [dependency injection](#inject-dependencies) to seek context independence.
++ Better explained through an example: [compare intermediate vs experienced](#ch4_novice_vs_intermediate_experienced).
+
+### Step 4: Trusting Other Objects
+>I know what I want and I _trust your to do your part._
+
+Better explained through an example: [compare intermediate vs experienced](#ch4_novice_vs_intermediate_experienced).
+
+### Using Messages to Discover Objects
+A message based approach (following these steps) can help you to discover _not so obvious_, but important objects. [See next example](#ch4_discovering_objects)
+
+A message based approach also helps you to find the first thing to assert in a test.
+
+<img id="ch4_discovering_objects" src="/images/ch4_discovering_objects.png" width="800"/>
 
 
