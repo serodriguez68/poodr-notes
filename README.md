@@ -332,9 +332,7 @@ __The following are rules-of-thumb for creating interfaces:__
 ## The Law of Demeter
 >Only talk to your immediate neighbors.
 
-This is not an absolute law. There may be cases where removing the violation is more costly than keeping it.
-
->Certain “violations” of Demeter reduce your application’s flexibility and maintainability, while others make perfect sense. Additionally, violations typically lead to objects that require a lot of _context_.
+>This is not an absolute law. Certain “violations” of Demeter reduce your application’s flexibility and maintainability, while others make perfect sense. Additionally, violations typically lead to objects that require a lot of _context_.
 
 The definition _"only use one dot"_ is not always right. There are cases that use multiple dots that do not violate Demeter.
 
