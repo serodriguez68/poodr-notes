@@ -153,7 +153,7 @@ Not every external method is a candidate for isolation. External methods become 
 
 + The external method is buried inside other complex code.
 + There are multiple calls to the external methods inside the class.
-+ The method is part of the [private interface of a external class.](#r3-exercise-caution-when-depending-on-private-interfaces)
++ The method is part of the [private interface of another class.](#r3-exercise-caution-when-depending-on-private-interfaces)
 
 [Wrong Code Example](code_examples/chapter_3.rb#L111-115) / [Right Code Example](code_examples/chapter_3.rb#L118-126)
 
@@ -324,7 +324,43 @@ __The following are rules-of-thumb for creating interfaces:__
 ### R4. Minimize Context
 
 + Create public methods that allow senders to get __what__ they want without knowing __how__ your class does it
-+ If face a class with an ill-defined public interface you have these options (depending on the case):
-    * Option 1. Define a new well defined method for that class' public interface.
++ If you face a class with an ill-defined public interface you have these options (depending on the case):
+    * Option 1. Define a new well-defined method for that class' public interface.
     * Option 2. Create a wrapper class with a well defined public interface.
     * Option 3. Create a single wrapping method and put it in your own class.
+
+## The Law of Demeter
+>Only talk to your immediate neighbors.
+
+This is not an absolute law. There may be cases where removing the violation is more costly than keeping it.
+
+>Certain “violations” of Demeter reduce your application’s flexibility and maintainability, while others make perfect sense. Additionally, violations typically lead to objects that require a lot of _context_.
+
+The definition _"only use one dot"_ is not always right. There are cases that use multiple dots that do not violate Demeter.
+
+__Examples__:
+
++ customer.bicycle.wheel.tire
+    * Type: __returns a distant attribute__
+    * There is debate on how firmly Demeter applies. It may be cheapest in your specific case to reach through intermediate objects than to go around.
++ customer.bicycle.wheel.rotate
+    * Type: __invokes distant behavior__
+    * __Cost is high. Remove this type of violation.__
++ hash.keys.sort.join(', ')
+    * __No violation__
+    * See? The _"use only one dot"_ definition is not always right.
+ 
+### Wrong approach to comply with Demeter: Delegation
+Delegation removes visible violations but ignores Demeter's spirit. Using delegation to hide tight coupling is not the same as decoupling code.
+
++ Delegation in Ruby: _delegate.rb or forwardable.rb_
++ Delegation in Rails: _the delegate method_
+
+### How to comply with Demeter
++ Demeter violations are clues of missing public interfaces. 
++ It is easy to comply with Demeter if you use a __message-based perspective__ in your design.
+
+
+
+
+
