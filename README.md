@@ -227,7 +227,7 @@ __(Original: Understanding Interfaces)__
     * __Result__: plug-able, component-like objects.
 
 ##  Defining interfaces
->On a restaurant the kitchen does many things but does not, expose them all to its customers. It has a __public__ interface that customers are expected to use; the menu. Within the kitchen many things happen, many other messages get passed, but these messages are __private__ and thus invisible to customers. Even though they may have ordered it, customers are not welcome to come in and stir the soup.
+>On a restaurant the kitchen does many things but does not, expose them all to its customers. It has a __public__ interface that customers are expected to use: the menu. Within the kitchen many things happen, many other messages get passed, but these messages are __private__ and thus invisible to customers. Even though they may have ordered it, customers are not welcome to come in and stir the soup.
 
 >The menu lets customers ask for __what__ they want without knowing anything about __how__ the kitchen makes it.
 
@@ -358,7 +358,23 @@ Delegation removes visible violations but ignores Demeter's spirit. Using delega
 + Demeter violations are clues of missing public interfaces. 
 + It is easy to comply with Demeter if you use a __message-based perspective__ in your design.
 
+_______________________________________________________________________________
+# Chapter 5 - Reducing Costs with Duck Typing
 
+## Undestranding Duck Typing
++ __Duck types__ are public interfaces that are not tied to any specific Class.
+    * Duck types are abstractions that share the public interface's name, but the code in the methods may or may not be unique on each Class that implemets the duck type.
++ Users of an object should not be concerned about it's class.
++ Class is just one way for an object to acquire a public interface (it is one of several public interfaces it can contain).
++ >It is not what an object _is_ that matters, it's what it _does_.
 
+### Design in need of a Duck (Wrong)
+[Wrong Code Example](code_examples/chapter_5.rb#L27-43)
 
+<img id="ch5_design_in_need_of_duck" src="/images/ch5_design_in_need_of_duck.png" width="800"/>
 
+__What is wrong with this approach:__
+
++ Explosion of dependencies (explicit name of classes, name of messages each class understands, arguments those messages require).
++ This style of code propagates itself. To add another preparer you need to create a dependency.
++ >Sequence diagrams should always be simpler than the code they represent; when they are not, something is wrong with the design.
