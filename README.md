@@ -363,18 +363,37 @@ _______________________________________________________________________________
 
 ## Undestranding Duck Typing
 + __Duck types__ are public interfaces that are not tied to any specific Class.
-    * Duck types are abstractions that share the public interface's name, but the code in the methods may or may not be unique on each Class that implemets the duck type.
-+ Users of an object should not be concerned about it's class.
+    * Duck types are abstractions that share the public interface's name.
+        - __Different objects respond to the same message__.
+    * Senders of the message __do not care about the class of the receiver__.
+    * Receivers supply their __own specific version of the behavior__.
 + Class is just one way for an object to acquire a public interface (it is one of several public interfaces it can contain).
-+ >It is not what an object _is_ that matters, it's what it _does_.
++ It is not what an object _is_ that matters, it's what it _does_.
 
-### Design in need of a Duck (Wrong)
-[Wrong Code Example](code_examples/chapter_5.rb#L27-43)
+### Design in need of a Duck (Concretion) - Wrong
+[Wrong Code Example](code_examples/chapter_5.rb#L27-60)
 
-<img id="ch5_design_in_need_of_duck" src="/images/ch5_design_in_need_of_duck.png" width="800"/>
+<img id="ch5_1_design_in_need_of_duck" src="/images/ch5_design_in_need_of_duck.png" width="400"/>
 
 __What is wrong with this approach:__
 
 + Explosion of dependencies (explicit name of classes, name of messages each class understands, arguments those messages require).
 + This style of code propagates itself. To add another preparer you need to create a dependency.
-+ >Sequence diagrams should always be simpler than the code they represent; when they are not, something is wrong with the design.
++ __Sequence diagrams should always be simpler than the code they represent; when they are not, something is wrong with the design.__
+
+### Design with Duck (Abstraction) - Right
+[Right Code Example](code_examples/chapter_5.rb#L64-99)
+
+<img id="ch5_2_design_with_duck" src="/images/ch5_2_design_with_duck.png" width="400"/>
+
+__What is right with this approach:__
+
++ The _prepare_ method trusts all of it's arguments to do their part.
++ Objects that implement _prepare_trip_ __are Preparers__ (this is the Duck Type abstraction).
+    * This makes it very easy to change the code (add or remove preparers without the need to change Trip at all).
+
+__Things to consider:__
+
++ Cost of Concretion VS Cost of Abstraction
+    * __Concrete code:__ easy to understand, costly to extend.
+    * __Abstract code:__ initially harder to understand, far easier to change.
