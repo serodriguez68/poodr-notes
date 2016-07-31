@@ -373,7 +373,7 @@ _______________________________________________________________________________
 ### Design in need of a Duck (Concretion) - Wrong
 [Wrong Code Example](code_examples/chapter_5.rb#L27-60)
 
-<img id="ch5_1_design_in_need_of_duck" src="/images/ch5_design_in_need_of_duck.png" width="400"/>
+<img id="ch5_1_design_in_need_of_duck" src="/images/ch5_1_design_in_need_of_duck.png" width="400"/>
 
 __What is wrong with this approach:__
 
