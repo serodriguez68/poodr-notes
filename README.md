@@ -424,8 +424,10 @@ Some times Ducks can exist but may not be needed. [Here is an example from the R
 Takeaways about this example:
 
 + This code is depending on Ruby's _Integer and Hash_ classes. They are far more stable than this method is (this is why ignoring the Duck isn't much of a deal).
-+ There _is_ probably a hiding Duck here. However it requires to monkey patch Ruby.
-    * Feel free to monkey patch Ruby if needed. You need to be able to defend the decision.
++ There _is_ probably a hiding Duck here.
+    * The implementation of a Duck will probably __not reduce the cost of the application.__
+    *  The implementation of a Duck requires to monkey patch Ruby.
+        - Feel free to monkey patch Ruby if needed. However, you need to be able to defend the decision.
 
 ## What about Duck Typing in Statically Typed Languages? 
 __(Conquering a Fear of Duck Typing)__
