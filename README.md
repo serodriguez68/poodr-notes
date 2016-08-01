@@ -334,7 +334,7 @@ __The following are rules-of-thumb for creating interfaces:__
 
 >This is not an absolute law. Certain “violations” of Demeter reduce your application’s flexibility and maintainability, while others make perfect sense. Additionally, violations typically lead to objects that require a lot of _context_.
 
-The definition _"only use one dot"_ is not always right. There are cases that use multiple dots that do not violate Demeter.
+The definition _"only use one dot"_ is __not always right__. There are cases that use multiple dots that do not violate Demeter.
 
 __Examples__:
 
@@ -355,7 +355,7 @@ Delegation removes visible violations but ignores Demeter's spirit. Using delega
 + Delegation in Rails: _the delegate method_
 
 ### How to comply with Demeter
-+ Demeter violations are clues of missing public interfaces. 
++ Demeter violations are clues of __missing objects whose public interface you have not yet discovered.__.
 + It is easy to comply with Demeter if you use a __message-based perspective__ in your design.
 
 _______________________________________________________________________________
@@ -388,7 +388,7 @@ __What is wrong with this approach:__
 
 __What is right with this approach:__
 
-+ The _prepare_ method trusts all of it's arguments to do their part.
++ The _prepare_ method trusts all of its arguments to do their part.
 + Objects that implement _prepare_trip_ __are Preparers__ (this is the Duck Type abstraction).
     * This makes it very easy to change the code (add or remove preparers without the need to change Trip at all).
 
@@ -402,9 +402,38 @@ __Things to consider:__
 > It is relatively easy to implement a duck type; your design challenge is to notice that you need one and to abstract its interface.
 
 ### Recognizing Hidden Ducks
-Replace the following coding patterns with ducks:
+__The following coding styles are indications that you are missing a Duck:__
 
 + Case Statements that switch on class / If Statements with .class == "KlassName" ([Example](code_examples/chapter_5.rb#L102-118))
 + __kind_of?__ and __is_a?__ ([Example](code_examples/chapter_5.rb#L121-128))
 + __responds_to?__ ([Example](code_examples/chapter_5.rb#L131-138))
 
+### Documenting Duck Types
+Tests are the best documentation. __You only need to write the tests.__
+
+### Sharing Code Between Ducks
+Ducks share the interface (method names) and __may__ share some code in the implementation inside the shared methods:
+
++ Share interface name but NOT code in methods: strategy described in this chapter.
++ Share interface name AND some code in methods: [See Ch7](#)
+<!-- WIP: add link to chapter 7 -->
+
+### Choosing Your Ducks Wisely
+Some times Ducks can exist but may not be needed. [Here is an example from the Rails Framework](code_examples/chapter_5.rb#L144-155).
+
+Takeaways about this example:
+
++ This code is depending on Ruby's _Integer and Hash_ classes. They are far more stable than this method is (this is why ignoring the Duck isn't much of a deal).
++ There _is_ probably a hiding Duck here. However it requires to monkey patch Ruby.
+    * Feel free to monkey patch Ruby if needed. You need to be able to defend the decision.
+
+## What about Duck Typing in Statically Typed Languages? 
+__(Conquering a Fear of Duck Typing)__
+
+The author compares both types of languages and makes an argument __in favor of dynamically typed languages__. Here are the takeaways from her discussion:
+
++ Duck Typing is not possible on static typed languages.
++ Metaprogramming is much easier in dynamic typed languages (strong argument in favor of dynamic typed languages).
++ When a dynamically typed application cannot be tuned to run quickly enough, static typing is the alternative. (If you must, you must).
++ The compiler __cannot__ save you from accidental type errors (This notion of safety is an illusion).
+    * Any language that allows casting a variable into a new type is vulnerable.
