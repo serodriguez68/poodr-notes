@@ -397,3 +397,14 @@ __Things to consider:__
 + Cost of Concretion VS Cost of Abstraction
     * __Concrete code:__ easy to understand, costly to extend.
     * __Abstract code:__ initially harder to understand, far easier to change.
+
+## Writing code that Relies on Ducks
+> It is relatively easy to implement a duck type; your design challenge is to notice that you need one and to abstract its interface.
+
+### Recognizing Hidden Ducks
+Replace the following coding patterns with ducks:
+
++ Case Statements that switch on class / If Statements with .class == "KlassName" ([Example](code_examples/chapter_5.rb#L102-118))
++ __kind_of?__ and __is_a?__ ([Example](code_examples/chapter_5.rb#L121-128))
++ __responds_to?__ ([Example](code_examples/chapter_5.rb#L131-138))
+
