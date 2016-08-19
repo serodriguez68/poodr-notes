@@ -454,7 +454,7 @@ _Classical_: Inheritance of classes
 ## Recognizing Where to Use Inheritance
 __(Recognizing when you have a problem that inheritance solves)__
 
-__The problem that inheritance solves:__ highly related types that share common behavior but differ along some dimension (sinble class with several different but related types)
+__The problem that inheritance solves:__ highly related types that share common behavior but differ along some dimension (single class with several different but related types)
 
 Here is a typical progression for problems that inheritance solves:
 
@@ -463,7 +463,7 @@ Here is a typical progression for problems that inheritance solves:
     
 + 2) Then you start embedding multiple types into that Class
     *  [Here is an example of the Bicycle Class with the embedded road style bike](code_examples/chapter_6.rb#L32-68).
-    *  Objects holding onto a instance of Bicycle may be tempted to check style before sending a message (creating a dependency).
+    *  Objects holding onto an instance of Bicycle may be tempted to check style before sending a message (creating a dependency).
     *  [Spot the Antipattern](code_examples/chapter_6.rb#L46-54): _an if statetment that checks an attribute that holds the category of self to determine what message to send to self._
         -  __This pattern indicates a missing subclass.__
 
@@ -473,8 +473,9 @@ Here is a typical progression for problems that inheritance solves:
 __Some extra details about inheritance__
 
 + __Multiple Inheritance:__ Gets complicated quickly. Ruby does NOT do this.
-+ __Single Inheritance: __ a _subclass_ is only allowed one parent superclass. (Ruby does this.)
-+ _Duck Types_ cut across classes, they __do not__ use classical inheritance; they share common behavior via __Ruby modules__.
++ __Single Inheritance:__ a _subclass_ is only allowed one parent superclass (Ruby does this).
++ _Duck Types_ cut across classes. They __do not__ use classical inheritance; they share common behavior via __Ruby modules__.
+
 <!-- WIP: add link to Chapter 7 -->
 + _Subclasses_ are everything their _Superclasses_ are, __plus more__.
 + _Subclasses_ are __specializations__ of their _Superclasses_.
