@@ -439,3 +439,45 @@ The author compares both types of languages and makes an argument __in favor of 
 + When a dynamically typed application cannot be tuned to run quickly enough, static typing is the alternative. (If you must, you must).
 + The compiler __cannot__ save you from accidental type errors (This notion of safety is an illusion).
     * Any language that allows casting a variable into a new type is vulnerable.
+
+_______________________________________________________________________________
+
+# Chapter 6 - Acquiring Behavior Through Inheritance
+ >Inheritance is for __specialization__, NOT for sharing code.
+
+## Understanding Classical Inheritance
+_Classical_: Inheritance of classes
+> No matter how complicated the code, the receiving object ultimately handles any message in one of two ways. It either responds directly or it passes the message on to some other object for a response.
+
++ Defines a forwarding path for non-understood messages.
+
+## Recognizing Where to Use Inheritance
+__(Recognizing when you have a problem that inheritance solves)__
+
+__The problem that inheritance solves:__ highly related types that share common behavior but differ along some dimension (sinble class with several different but related types)
+
+Here is a typical progression for problems that inheritance solves:
+
++ 1) Your code starts with a Concrete Class
+    * [Here is an example of a Concrete Bicycle Class](code_examples/chapter_6.rb#L2-29).
+    
++ 2) Then you start embedding multiple types into that Class
+    *  [Here is an example of the Bicycle Class with the embedded road style bike](code_examples/chapter_6.rb#L32-68).
+    *  Objects holding onto a instance of Bicycle may be tempted to check style before sending a message (creating a dependency).
+    *  [Spot the Antipattern](code_examples/chapter_6.rb#L46-54): _an if statetment that checks an attribute that holds the category of self to determine what message to send to self._
+        -  __This pattern indicates a missing subclass.__
+
++ 3) Then you find the embedded types in your class
+    *  Be on the lookout for variables/attributes that denote different types. Typical names for these variables are: _type, category, style_
+
+__Some extra details about inheritance__
+
++ __Multiple Inheritance:__ Gets complicated quickly. Ruby does NOT do this.
++ __Single Inheritance: __ a _subclass_ is only allowed one parent superclass. (Ruby does this.)
++ _Duck Types_ cut across classes, they __do not__ use classical inheritance; they share common behavior via __Ruby modules__.
+<!-- WIP: add link to Chapter 7 -->
++ _Subclasses_ are everything their _Superclasses_ are, __plus more__.
++ _Subclasses_ are __specializations__ of their _Superclasses_.
+
+## Misapplying Inheritance
+
