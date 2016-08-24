@@ -475,10 +475,10 @@ __Some extra details about inheritance__
 + __Multiple Inheritance:__ Gets complicated quickly. Ruby does NOT do this.
 + __Single Inheritance:__ a _subclass_ is only allowed one parent superclass (Ruby does this).
 + _Duck Types_ cut across classes. They __do not__ use classical inheritance; they share common behavior via __Ruby modules__.
-
 <!-- WIP: add link to Chapter 7 -->
 + _Subclasses_ are everything their _Superclasses_ are, __plus more__.
 + _Subclasses_ are __specializations__ of their _Superclasses_.
 
 ## Misapplying Inheritance
-
+__You should never inherit from a concrete Class. Always inherit from abstract Classes.__
+<img src="/images/ch6_1_misapplying_inheritance.png" width="600"/>
