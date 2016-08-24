@@ -194,7 +194,8 @@ You could write a version of the code were _KlassB_ depends con _KlassA_.
 
 + Some classes are more likely than others to have changes in requirements.
     * You can rank the likelihood of change of any classes you are using regardless of their origin (internal or external). This will help you to make decisions.
-+ Concrete classes are more likely to change than abstract classes.
++ Concrete classes are more likely to change than __abstract classes__.
+    * __Abstract Class:__ disassociated from any specific instance.
 + Changing a class that has many dependents will result in widespread consequences.
     * A class that if changed causes a catastrophe  has enormous pressure to _never_ change.
     * Your app may be forever handicapped because of having such types of classes.
@@ -458,16 +459,16 @@ __The problem that inheritance solves:__ highly related types that share common 
 
 Here is a typical progression for problems that inheritance solves:
 
-+ 1) Your code starts with a Concrete Class
++ __1) Your code starts with a Concrete Class__
     * [Here is an example of a Concrete Bicycle Class](code_examples/chapter_6.rb#L2-29).
     
-+ 2) Then you start embedding multiple types into that Class
++ __2) Then you start embedding multiple types into that Class__
     *  [Here is an example of the Bicycle Class with the embedded road style bike](code_examples/chapter_6.rb#L32-68).
     *  Objects holding onto an instance of Bicycle may be tempted to check style before sending a message (creating a dependency).
     *  [Spot the Antipattern](code_examples/chapter_6.rb#L46-54): _an if statetment that checks an attribute that holds the category of self to determine what message to send to self._
         -  __This pattern indicates a missing subclass.__
 
-+ 3) Then you find the embedded types in your class
++ __3) Then you find the embedded types in your class__
     *  Be on the lookout for variables/attributes that denote different types. Typical names for these variables are: _type, category, style_
 
 __Some extra details about inheritance__
@@ -476,9 +477,37 @@ __Some extra details about inheritance__
 + __Single Inheritance:__ a _subclass_ is only allowed one parent superclass (Ruby does this).
 + _Duck Types_ cut across classes. They __do not__ use classical inheritance; they share common behavior via __Ruby modules__.
 <!-- WIP: add link to Chapter 7 -->
-+ _Subclasses_ are everything their _Superclasses_ are, __plus more__.
 + _Subclasses_ are __specializations__ of their _Superclasses_.
 
 ## Misapplying Inheritance
-__You should never inherit from a concrete Class. Always inherit from abstract Classes.__
+>__You should never inherit from a concrete Class. Always inherit from abstract Classes.__
+
+__Abstract Class:__ disassociated from any specific instance.
+[Wrong Code Example](code_examples/chapter_6.rb#L70-98)
 <img src="/images/ch6_1_misapplying_inheritance.png" width="600"/>
+
+## Properly Applying Inheritance
+__(Finding the Abstraction)__
+
+> _Subclasses_ are everything their _Superclasses_ are, __plus more__.
+> Any object that expect _Bicycle_ should be able to interact with a _Mountain Bike_ in blissful ignorance of its actual Class.
+
+__Two things are required for inheritance to work:__
+1. There is a _generalization-specialization_ relationship in the objects you are modelling.
+2. Correct coding techniques are used.
+
+Here is a typical process on how to build a proper inheritance strategy:
+
+ + __1) Creating an Abstract Superclass and Pushing Down Everything to a Concrete Class__
+     * __Abstract Superclass:__ Disassociated from any specific instance.
+         - e.g You won't expect to have instances of _Bicycle_
+     * Try to postpone the design of the inheritance until you are required to handle 3+ specializations. 
+         - _e.g Until you are asked to deal with 3+ types of bikes._
+         - Two: wait if you can. Three: will help you find the right abstraction.
+         - It almost never makes sense to create an abstract superclass with only 1 subclass.
+     * Push down all code from the original class with mixed types (soon now your __abstract superclass__) into one of the concrete classes.
+         - [Push Down Code Example](code_examples/chapter_6.rb#L100-113)
+         - Result of this step:
+
+<img src="/images/ch6_2_push_down_everything.png" width="600"/>
+
