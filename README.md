@@ -484,7 +484,7 @@ __Some extra details about inheritance__
 
 __Abstract Class:__ disassociated from any specific instance.
 [Wrong Code Example](code_examples/chapter_6.rb#L70-98)
-<img src="/images/ch6_1_misapplying_inheritance.png" width="600"/>
+<img src="/images/ch6_1_misapplying_inheritance.png" width="400"/>
 
 ## Properly Applying Inheritance
 __(Finding the Abstraction)__
@@ -493,6 +493,7 @@ __(Finding the Abstraction)__
 > Any object that expect _Bicycle_ should be able to interact with a _Mountain Bike_ in blissful ignorance of its actual Class.
 
 __Two things are required for inheritance to work:__
+
 1. There is a _generalization-specialization_ relationship in the objects you are modelling.
 2. Correct coding techniques are used.
 
@@ -505,9 +506,9 @@ Here is a typical process on how to build a proper inheritance strategy:
          - _e.g Until you are asked to deal with 3+ types of bikes._
          - Two: wait if you can. Three: will help you find the right abstraction.
          - It almost never makes sense to create an abstract superclass with only 1 subclass.
-     * Push down all code from the original class with mixed types (soon now your __abstract superclass__) into one of the concrete classes.
+     * Push down all code from the original class with mixed types (soon your __abstract superclass__) into one of the concrete classes.
          - [Pushing down all code to one concrete class](code_examples/chapter_6.rb#L100-113) will probably [break the other concrete class.](code_examples/chapter_6.rb#L116-128) This will be fixed next.
          - Result of this step:
 
-<img src="/images/ch6_2_push_down_everything.png" width="600"/>
+<img src="/images/ch6_2_push_down_everything.png" height="300"/>
 
