@@ -506,7 +506,7 @@ Here is a typical process on how to build a proper inheritance strategy:
          - Two: wait if you can. Three: will help you find the right abstraction.
          - It almost never makes sense to create an abstract superclass with only 1 subclass.
      * Push down all code from the original class with mixed types (soon now your __abstract superclass__) into one of the concrete classes.
-         - [Push Down Code Example](code_examples/chapter_6.rb#L100-113)
+         - [Pushing down all code to one concrete class](code_examples/chapter_6.rb#L100-113) will probably [break the other concrete class.](code_examples/chapter_6.rb#L116-128) This will be fixed next.
          - Result of this step:
 
 <img src="/images/ch6_2_push_down_everything.png" width="600"/>
