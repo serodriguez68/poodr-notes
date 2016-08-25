@@ -510,7 +510,7 @@ __Here is a typical process on how to build a proper inheritance strategy:__
          - [Pushing down all code to one concrete class](code_examples/chapter_6.rb#L100-113) will probably [break the other concrete class.](code_examples/chapter_6.rb#L116-128) This will be fixed next.
          - Result of this step:
 
-<img src="/images/ch6_2_push_down_everything.png" height="300"/>
+<img src="/images/ch6_2_push_down_everything.png" height="150"/>
 
 + __2) Promoting abstract behavior while separating the abstract from the concrete__
     * Identify behavior that is common to all specializations and __promote__ it to the __abstract superclass.__ [Example of promotion](code_examples/chapter_6.rb#L181-211)
@@ -520,10 +520,46 @@ __Here is a typical process on how to build a proper inheritance strategy:__
         - Consequences of promotion failures are low.
         - Consequences of wrong demotion (leaving concrete code on the superclass) are high and difficult to solve.
 
-+ __3) Adding defaults smartly with the Template Method Pattern__
-    * _Template method pattern_ is a technique where a _superclass_ defines a basic structure that can be overriden by the _subclasses_  when they implement the same methods (with the same name).
++ __3) Invite Inheritors to Supply Specializations Using the Template Method Pattern__
+    * _Template method pattern_ is a technique where a _superclass_ implements and calls methods that can be overriden by the _subclasses_ to supply specialized behaviour by implementing them.
         - [Bicycle's initilize method relies on the default_chain and default_tire_size](code_examples/chapter_6.rb#L299-341) methods. Any specialization can implement those methods to set their own defaults.
+        - [Another example of specialization with the template method pattern](code_examples/chapter_6.rb#L519-541) with the _post\_initialize_ method.
     * __Avoid problems downstream by implementing and documenting every template method__
         - On [this example](code_examples/chapter_6.rb#L344-352) the _Bicycle superclass_ hasn't implemented the _default tire size_ method. A programmer is asked to create a new specialization subclass (_RecumbentBike_) but he expects _Bicycle's default tire size_ method to hande the default.  As the method is not implemented anywhere and it is not documented with a useful error, a cryptic error is raised.
         - Any _superclass_ that uses the template method pattern must supply an implementation for every message it sends. [Even if the implementation is rasing a useful error that documents the pattern.](code_examples/chapter_6.rb#L371-383)
-       
+  
+## Managing Coupling Between Superclasses and Subclasses
+
+>Abstract superclasses use the template method pattern to invite inheritors to supply specializations, and use hook methods to allow these inheritors to contribute these specializations without being forced to send super.
+
+The way to manage coupling is illustrated using the implementation of the _spares_ method as example. Two implementations will be shown: 
+
++ (1) Coupled solution using __super__ (wrong)
++ (2) Decoupled solution using __hooks__ (right).
+
+### Understanding Coupling
+__(Coupled approach using super - Wrong)__
+
+Take a look at [this solution](code_examples/chapter_6.rb#L412-468) and notice the following:
+
++ _Subclasses_ rely on _super_.
+    * This means the _subclass_ knows the algorithm. It depends on this knowledge.
++ Both _Subclasses_ know things their _superclass_.
+    * They know that their _superclass_ responds to _initialize_. (They send _super_ on their initialize methods).
+    * They know that their _superclass_ implements _spares_ and that it returns a hash.
++ Pattern: know things about themselves and about their _superclass_
+    * This pattern requires that _sublasses_ know how to interact with their _superclasses_.
+    * Forcing a subclass to know how to interact with their _superclass_ [can cause many problems](code_examples/chapter_6.rb#L491-517)
+    
+### Decoupling Subclasses Using Hook Messages
+__(Decoupled approach using hooks - Right)__
+
+> Control should be on the _Superclass_, NOT the _Subclasses_
+
++ [Hook Example 1 - post_initialize](code_examples/chapter_6.rb#L519-541).
+    * Removes the _initialize_ method completely from the _subclass._
+    * Eliminates _super_.
++ [Hook Example 2 - local_spares](code_examples/chapter_6.rb#L597-617).
+    * _RoadBike_ no longer knows that _Bicycle_ implements a spares method.
+    * Eliminates _super_.
++ [This is the final implementation of _Bicyle_ and its _Subclasses_](code_examples/chapter_6.rb#L679-744) and [this is how easy it is to create a new _subclass_](code_examples/chapter_6.rb#L747-772).
