@@ -497,7 +497,7 @@ __Two things are required for inheritance to work:__
 1. There is a _generalization-specialization_ relationship in the objects you are modelling.
 2. Correct coding techniques are used.
 
-Here is a typical process on how to build a proper inheritance strategy:
+__Here is a typical process on how to build a proper inheritance strategy:__
 
  + __1) Creating an Abstract Superclass and Pushing Down Everything to a Concrete Class__
      * __Abstract Superclass:__ Disassociated from any specific instance.
@@ -506,9 +506,24 @@ Here is a typical process on how to build a proper inheritance strategy:
          - _e.g Until you are asked to deal with 3+ types of bikes._
          - Two: wait if you can. Three: will help you find the right abstraction.
          - It almost never makes sense to create an abstract superclass with only 1 subclass.
-     * Push down all code from the original class with mixed types (soon your __abstract superclass__) into one of the concrete classes.
+     * __Push down all__ code from the original class with mixed types (soon your __abstract superclass__) into one of the concrete classes.
          - [Pushing down all code to one concrete class](code_examples/chapter_6.rb#L100-113) will probably [break the other concrete class.](code_examples/chapter_6.rb#L116-128) This will be fixed next.
          - Result of this step:
 
 <img src="/images/ch6_2_push_down_everything.png" height="300"/>
 
++ __2) Promoting abstract behavior while separating the abstract from the concrete__
+    * Identify behavior that is common to all specializations and __promote__ it to the __abstract superclass.__ [Example of promotion](code_examples/chapter_6.rb#L181-211)
+        - This could even requiere splitting methods that have both abstract and concrete behavior inside.
+            + [On this example](code_examples/chapter_6.rb#L277-284) _spares_ is a candidate for promotion but it _tape color_ is only applicable for the _RoadBike_ specialization. Hence, [we need to separate it](code_examples/chapter_6.rb#L287-296) and promote only the abstract (shared code).
+    * Why push down and then promote?
+        - Consequences of promotion failures are low.
+        - Consequences of wrong demotion (leaving concrete code on the superclass) are high and difficult to solve.
+
++ __3) Adding defaults smartly with the Template Method Pattern__
+    * _Template method pattern_ is a technique where a _superclass_ defines a basic structure that can be overriden by the _subclasses_  when they implement the same methods (with the same name).
+        - [Bicycle's initilize method relies on the default_chain and default_tire_size](code_examples/chapter_6.rb#L299-341) methods. Any specialization can implement those methods to set their own defaults.
+    * __Avoid problems downstream by implementing and documenting every template method__
+        - On [this example](code_examples/chapter_6.rb#L344-352) the _Bicycle superclass_ hasn't implemented the _default tire size_ method. A programmer is asked to create a new specialization subclass (_RecumbentBike_) but he expects _Bicycle's default tire size_ method to hande the default.  As the method is not implemented anywhere and it is not documented with a useful error, a cryptic error is raised.
+        - Any _superclass_ that uses the template method pattern must supply an implementation for every message it sends. [Even if the implementation is rasing a useful error that documents the pattern.](code_examples/chapter_6.rb#L371-383)
+       
