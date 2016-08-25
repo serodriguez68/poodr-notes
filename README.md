@@ -444,7 +444,7 @@ The author compares both types of languages and makes an argument __in favor of 
 _______________________________________________________________________________
 
 # Chapter 6 - Acquiring Behavior Through Inheritance
- >Inheritance is for __specialization__, NOT for sharing code.
+>Inheritance is for __specialization__, NOT for sharing code.
 
 ## Understanding Classical Inheritance
 _Classical_: Inheritance of classes
@@ -563,3 +563,5 @@ __(Decoupled approach using hooks - Right)__
     * _RoadBike_ no longer knows that _Bicycle_ implements a spares method.
     * Eliminates _super_.
 + [This is the final implementation of _Bicyle_ and its _Subclasses_](code_examples/chapter_6.rb#L679-744) and [this is how easy it is to create a new _subclass_](code_examples/chapter_6.rb#L747-772).
+
+> Well-designed inheritance hierarchies are easy to extend with new subclasses, even for programmers who know very little about the application. 
