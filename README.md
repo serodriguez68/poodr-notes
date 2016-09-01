@@ -565,3 +565,24 @@ __(Decoupled approach using hooks - Right)__
 + [This is the final implementation of _Bicyle_ and its _Subclasses_](code_examples/chapter_6.rb#L679-744) and [this is how easy it is to create a new _subclass_](code_examples/chapter_6.rb#L747-772).
 
 > Well-designed inheritance hierarchies are easy to extend with new subclasses, even for programmers who know very little about the application. 
+
+_______________________________________________________________________________
+
+# Chapter 7a - Sharing Role Behavior with Modules
+
+__Classical inheritance__ is not the best solution strategy for all problems. Other inheritance strategies such as __sharing role behavior with modules__ may be handy in those cases. [Look here for some guidelines on when to use each strategy](#chapter-7b-writting-inheritable-code)
+
+>Creation of a recumbent mountain bike subclass requires combining the qualities of two existing subclasses, something that inheritance cannot readily accommodate. Even more distressing is the fact that this failure illustrates just one of several ways in which inheritance can go wrong.
+
+> The use of classical inheritance is optional; every problem that it solves can be solved another way.
+
+## Understanding Roles
+
++ Roles are for __sharing behavior__ among __unrelated objects__.
+    * When objects begin to play a _role_ they enter in a relationship with the objects for whom they play the role.
+
+Here is a typical process to create a proper role strategy:
++ 1) 
+
+# Chapter 7b - Writting Inheritable Code
+__Applies for [Chapter 5](#chapter-5-reducing-costs-with-duck-typing), [Chapter 6](#chapter-6-acquiring-behavior-through-inheritance) and [Chapter 7.1](#chapter-7a-sharing-role-behavior-with-modules)__
