@@ -594,7 +594,7 @@ __Here is a typical process to create a proper role strategy. The design strateg
     * This section shows an example of a __wrong__ decision of responsibilites to help you spot some anti-patterns. 
     * The following sequence diagram shows a __wrong__ organization of responsibilites: 
     
-    <img src="/images/ch7_1_class_checking_anti_pattern.png" height="300"/>  
+    <img src="/images/ch7_1_class_checking_anti_pattern.png" height="400"/>  
 
 + __3) Solving Bad Responsibilites__ (Removing Unnecessary Dependencies)
     * __3.1) Discovering the Schedulable Duck Type (Role)__
