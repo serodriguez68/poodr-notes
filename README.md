@@ -578,11 +578,31 @@ __Classical inheritance__ is not the best solution strategy for all problems. Ot
 
 ## Understanding Roles
 
-+ Roles are for __sharing behavior__ among __unrelated objects__.
-    * When objects begin to play a _role_ they enter in a relationship with the objects for whom they play the role.
++ Roles are for __sharing behavior and/or some method names in the public interface__ among __unrelated objects__.
+    * If objects share only some __public method names__, [Duck typing of method names](#chapter-5-reducing-costs-with-duck-typing) can be enough (no modules required).
+    * If objects share the public method names and the __behaviour inside those methods__, you should organize that code in a __module__.
+    * When objects begin to play a _role_ they enter in a relationship with the objects for whom they play the role 
+        -  Using a role creates dependencies that need to be taken into account when deciding among design options.
 
-Here is a typical process to create a proper role strategy:
-+ 1) 
+__Here is a typical process to create a proper role strategy. The design strategy is improved incrementally:__
+
++ __1) Finding Roles__
+    * [Duck types](#chapter-5-reducing-costs-with-duck-typing) are roles.
+    * Roles often come in pairs (if there is a `Preparer` role, there will also be a `Preparable` role).
+        - `Preparable`implements an interface with all methods that a `Preparer`might send to it.
++ __2) Check if Responsibilites are Right__ (Organizing Responsibilites)
+    * This section shows an example of a __wrong__ decision of responsibilites to help you spot some anti-patterns. 
+    * The following sequence diagram shows a __wrong__ organization of responsibilites: 
+    
+    <img src="/images/ch7_1_class_checking_anti_pattern.png" height="300"/>  
+
++ __3) Solving Bad Responsibilites__ (Removing Unnecessary Dependencies)
+    * __3.1) Discovering the Schedulable Duck Type (Role)__
+        - The following diagram proposes and improvement but still has some improvement opportunities.
+
+    <img src="/images/ch7_2_targets_do_not_speak_for_themselves.png" height="300"/>  
+    
+    * __3.2) Letting Objects Speak for Themselves__ 
 
 # Chapter 7b - Writting Inheritable Code
 __Applies for [Chapter 5](#chapter-5-reducing-costs-with-duck-typing), [Chapter 6](#chapter-6-acquiring-behavior-through-inheritance) and [Chapter 7.1](#chapter-7a-sharing-role-behavior-with-modules)__
