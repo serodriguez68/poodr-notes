@@ -603,6 +603,23 @@ __Here is a typical process to create a proper role strategy. The design strateg
     <img src="/images/ch7_2_targets_do_not_speak_for_themselves.png" height="300"/>  
     
     * __3.2) Letting Objects Speak for Themselves__ 
+    
+> Objects should manage themselves; they __should contain their own behavior__. If your interest is in object B, you should not be forced to know about object A if your only use of it is to find things out about B.
+
+ Extreme example to illustrate the idea: 
+> Imagine a StringUtils class that implements utility methods for managing strings. You can ask StringUtils if a string is empty by sending StringUtils.empty?(some_string), but __this you are involving a third party for something that String should be able to do alone.__
+
++ __4) There are 2 decisions to deal with when implementing role behavior with modules.__
+    * __4.1) What the code does__ _(Writing the Concrete Code)_
+        - Pick an arbitrary __concrete class__ (as opposed to an [abstract class](#choosing-dependency-direction)) and implement the duck
+            -  i.e Type the duck directly into the concrete class. You will worry about _where the code lives_ later.
+            -  [This code](code_examples/chapter_7.rb#L12-39) and the following diagram show an example of writing the duck directly on the concrete class.
+
+<img src="/images/ch7_3_one_target_speaks_for_itself.png" height="300"/> 
+
+    * __4.2) Where the code lives__ _(Extracting the Abstraction)_
+<!-- You are Here -->
+    
 
 # Chapter 7b - Writting Inheritable Code
 __Applies for [Chapter 5](#chapter-5-reducing-costs-with-duck-typing), [Chapter 6](#chapter-6-acquiring-behavior-through-inheritance) and [Chapter 7.1](#chapter-7a-sharing-role-behavior-with-modules)__
