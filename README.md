@@ -570,7 +570,7 @@ _______________________________________________________________________________
 
 # Chapter 7a - Sharing Role Behavior with Modules
 
-__Classical inheritance__ is not the best solution strategy for all problems. Other inheritance strategies such as __sharing role behavior with modules__ may be handy in those cases. [Look here for some guidelines on when to use each strategy](#chapter-7b-writting-inheritable-code)
+__Classical inheritance__ is not the best solution strategy for all problems. Other inheritance strategies such as __sharing role behavior with modules__ may be handy in those cases. [Look here for some guidelines on when to use each strategy](#chapter-7c-writting-inheritable-code)
 
 >Creation of a recumbent mountain bike subclass requires combining the qualities of two existing subclasses, something that inheritance cannot readily accommodate. Even more distressing is the fact that this failure illustrates just one of several ways in which inheritance can go wrong.
 
@@ -617,9 +617,40 @@ __Here is a typical process to create a proper role strategy. The design strateg
 
 <img src="/images/ch7_3_one_target_speaks_for_itself.png" height="300"/> 
 
-    * __4.2) Where the code lives__ _(Extracting the Abstraction)_
-<!-- You are Here -->
-    
+  * __4.2) Where the code lives__ _(Extracting the Abstraction)_
+      - Bicycle is not the only thing that is _schedulable_. How to rearrange the code so that it can be shared among objects of __different classes__?
+      - [This Code](code_examples/chapter_7.rb#L52-72) shows how to extract the abstraction from the previous step into a module. 
+          + Notice that:
+              * The dependency on `Schedule` has been moved to the `Schedulable` module, isolating it.
+              * The module implements the `lead_days`  __hook__ to follow the [template method pattern](#properly-applying-inheritance). The `lead_days` hook is [overridable by any _includer_](code_examples/chapter_7.rb#L75-93) of the module.
+                  - Just as with classical inheritance, modules must implement every __template method pattern__ (even if it only raises an error).
+              * [Other objects can play the `Schedulable` role by including the module without duplicating the code](code_examples/chapter_7.rb#L96-127). The current implemantation looks as follows:
 
-# Chapter 7b - Writting Inheritable Code
+<img src="/images/ch7_4_the_schedulable_duck_type.png" height="300"/> 
+_______________________________________________________________________________
+
+# Chapter 7b - How does Ruby Method Look-Up Works? 
+__(Looking Up Methods)__
+
+<img src="/images/ch7_7_method_lookup.png" height="900"/> 
+
+__Include vs Extend__
+
++ __Include:__ affects all instances of the class where the module was included (behave like instance methods).
++ __Extend:__ adds the module's behavior directly into the __single object__.
+    * __Extending a class__ with a module creates __class methods__ (A class is an object).
+    * __Extending an instance__ of a class with a module creates instance methods in __that instance__.
+
+__How missing methods are handled in Ruby__ 
+>If all attempts to find a suitable method fail, you might expect the search to stop, but many languages make a second attempt to resolve the message.
+
+>Ruby gives the original receiver a second chance by sending it new message, method_missing, and passing :spares as an argument. Attempts to resolve this new message restart the search along the same path, except now the search is for method_missing rather than spares.
+
+_______________________________________________________________________________
+
+# Chapter 7c - Writting Inheritable Code
 __Applies for [Chapter 5](#chapter-5-reducing-costs-with-duck-typing), [Chapter 6](#chapter-6-acquiring-behavior-through-inheritance) and [Chapter 7.1](#chapter-7a-sharing-role-behavior-with-modules)__
+
+With classical inheritance and sharing roles with modules you can write very convoluted and difficult to debug code. The intention of this chapter is to give you guidelines on how to write properly inheritable code.
+
+_is-a_ versus _behaves-like-a_ (classical inheritance vs roles)
