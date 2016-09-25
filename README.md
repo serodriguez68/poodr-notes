@@ -632,7 +632,7 @@ _______________________________________________________________________________
 # Chapter 7b - How does Ruby Method Look-Up Works? 
 __(Looking Up Methods)__
 
-<img src="/images/ch7_7_method_lookup.png" height="900"/> 
+<img src="/images/ch7_7_method_lookup.png" height="650"/> 
 
 __Include vs Extend__
 
