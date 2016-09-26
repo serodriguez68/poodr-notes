@@ -651,6 +651,52 @@ _______________________________________________________________________________
 # Chapter 7c - Writting Inheritable Code
 __Applies for [Chapter 5](#chapter-5-reducing-costs-with-duck-typing), [Chapter 6](#chapter-6-acquiring-behavior-through-inheritance) and [Chapter 7.1](#chapter-7a-sharing-role-behavior-with-modules)__
 
-With classical inheritance and sharing roles with modules you can write very convoluted and difficult to debug code. The intention of this chapter is to give you guidelines on how to write properly inheritable code.
+With classical inheritance and sharing roles with modules you can write very convoluted and difficult to debug code. The intention of this chapter is to show you the specific __coding techniques__ used to write quality inheritance strategies.
 
-_is-a_ versus _behaves-like-a_ (classical inheritance vs roles)
+## Coding Technique 1: Recognize the Antipatterns
+
++ __Antipattern 1:__ objects that use variable names like `type` or `category` to determine what message to send to `self`
+    * Solution: [Classican Inheritance](#chapter-6-acquiring-behavior-through-inheritance)
++ __Antipattern 2:__ when a sending object checks the type of the receiving object to determine what message to send.
+    * You have overlooked a duck type.
+    * Solution: Implement a duck type interface on all recieving objects.
+        - If duck types also share behaviour (not only the interface), place that code [in a module](#chapter-7a-sharing-role-behavior-with-modules) and include it on every duck.
++ Extra info: When choosing between classical inheritance or roles (duck types) think about this:
+    * _is-a_ (classical) versus _behaves-like-a_ (roles)
+
+## Coding Technique 2: Insist on the Abstraction
+
++ __Rule:__ All of the code in an abstract superclass should apply to every class that inherits it / The code in a module must apply to all who use it.
++ __Consequences of breaking the rule:__ inheriting objects obtain incorrect behaviour. Programmes start to do awful hacks to get around this weird behaviour.
++ __Symptoms of breaking the rule:__ Subclasses or objects that include a module that override a method to raise an exception like _'does not implements this method'_.
++ __Common pitfalls when working with abstractions:__
+    * Creating an abstraction where it doesn't exist. (If you cannot indentify it correctly, there may not be one.)
+    * If no common abstraction exists, then inheritance is not the solution to the problem.
+
+## Coding Technique 3: Good Practices on Superclasses & Subclasses
+__(Honor the Contract)__
+
+Contract: All `Subclasses` must be suitable to substitute their `Superclass` without breaking anything.
+
+__Subclasses must:__
+
++ Conform to their `Superclass` interface
+    * Respond to every message in that interface, taking the same kinds of inputs and returning the same kind of outputs.
++ They are not permitted to do anything that forces others to check their type in order to know how to treat them.
+
+## Coding Technique 4: Use the Template Method Pattern
+[See _Properly Applying Inheritance_ for more information.](#properly-applying-inheritance)
+
+## Coding Technique 5: Preemptively Decouple Classes
+
+> Avoid writing code that requires its inheritors to send super; instead use hook messages to allow subclasses to participate while absolving them of responsibility for knowing the abstract algorithm.
+
+See [Decoupling Subclasses Using Hook Messages](#decoupling-subclasses-using-hook-messages)
+
+__Warning:__ Hook methods only solve the problem of sending `super` for adjacent levels of the hierarchy. That is why coding technique is important.
+
+## Coding Technique 6: Create Shallow Hierarchies
+<img src="/images/ch7_8_shapes_of_hierarchies.png" height="300"/> 
+_______________________________________________________________________________
+
+# Chapter 8 - Combining Objects with Composition
