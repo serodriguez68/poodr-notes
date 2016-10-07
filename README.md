@@ -91,11 +91,11 @@ _______________________________________________________________________________
 
 #### Hide Instance Variables
 Never call @variables inside methods = user wrapper methods instead. 
-[Wrong Code Example](code_examples/chapter_2.rb#L61-71) / [Right Code Example](code_examples/chapter_2.rb#L73-102)
+[Wrong Code Example](code_examples/chapter_2.rb#L61-L71) / [Right Code Example](code_examples/chapter_2.rb#L73-L102)
 
 #### Hide Data Structures
 If the class uses complex data structures = Write wrapper methods that decipher the structure and depend on those methods.
-[Wrong Code Example](code_examples/chapter_2.rb#L105-117) / [Right Code Example](code_examples/chapter_2.rb#L124-141)
+[Wrong Code Example](code_examples/chapter_2.rb#L105-L117) / [Right Code Example](code_examples/chapter_2.rb#L124-L141)
 
 ### Enforce Single Responsibility Everywhere
 
@@ -109,11 +109,11 @@ If the class uses complex data structures = Write wrapper methods that decipher 
 * Separate iteration from action (common case of single responsibility violation in methods).
 
 #### Isolate Extra Responsibilities in Classes
-If you are not sure if you will need another class but have identified a class with an extra responsibility, __isolate it__ ([Example using Struct.](code_examples/chapter_2.rb#L176-197))
+If you are not sure if you will need another class but have identified a class with an extra responsibility, __isolate it__ ([Example using Struct.](code_examples/chapter_2.rb#L176-L197))
 _______________________________________________________________________________
 # Chapter 3 - Managing Dependencies
 ## Recognizing Dependencies
-An object has a dependency when it knows ([See example code](code_examples/chapter_3.rb#L2-34)): 
+An object has a dependency when it knows ([See example code](code_examples/chapter_3.rb#L2-L34)): 
 
 1. The name of another class. _(Gear expects a class named Wheet to exist.)_
     * Solution strategy 1: __[Inject Dependencies](#inject-dependencies)__
@@ -138,13 +138,13 @@ An object has a dependency when it knows ([See example code](code_examples/chapt
 ## Solution Strategies
 ### Inject Dependencies
 Instead of explicitly calling another class' name inside a method, pass the instance of the other class as an argument to the method.
-[Wrong Code Example](code_examples/chapter_3.rb#L37-52) / [Right Code Example](code_examples/chapter_3.rb#L55-67)
+[Wrong Code Example](code_examples/chapter_3.rb#L37-L52) / [Right Code Example](code_examples/chapter_3.rb#L55-L67)
 
 ### Isolate Instance Creation
 Use this if you can't get rid of "_the name of another class_" dependency type through dependency injection.
 
-+ Technique 1: __Move external class name call to the initialize method.__ ([Example code](code_examples/chapter_3.rb#L73-83))
-+ Technique 2: __Isolate external class call in explicit defined method.__ ([Example code](code_examples/chapter_3.rb#L87-102))
++ Technique 1: __Move external class name call to the initialize method.__ ([Example code](code_examples/chapter_3.rb#L73-L83))
++ Technique 2: __Isolate external class call in explicit defined method.__ ([Example code](code_examples/chapter_3.rb#L87-L102))
 
 ### Isolate Vulnerable External Messages
 > For messages sent to someone other than _self_.
@@ -155,7 +155,7 @@ Not every external method is a candidate for isolation. External methods become 
 + There are multiple calls to the external methods inside the class.
 + The method is part of the [private interface of another class.](#r3-exercise-caution-when-depending-on-private-interfaces)
 
-[Wrong Code Example](code_examples/chapter_3.rb#L111-115) / [Right Code Example](code_examples/chapter_3.rb#L118-126)
+[Wrong Code Example](code_examples/chapter_3.rb#L111-L115) / [Right Code Example](code_examples/chapter_3.rb#L118-L126)
 
 ### Use Hashes for Initialization Arguments
 + You will be changing the argument order dependency for an argument name dependency.
@@ -165,21 +165,21 @@ Not every external method is a candidate for isolation. External methods become 
     * For complex method signatures, hashes are best.
     * There are many cases in between where some arguments are required as stable (dependent on order) and some are less stable or optional (dependent on names by hash).  This is fine.
 
-[Wrong Code Example](code_examples/chapter_3.rb#L129-142) / [Right Code Example](code_examples/chapter_3.rb#L145-158)
+[Wrong Code Example](code_examples/chapter_3.rb#L129-L142) / [Right Code Example](code_examples/chapter_3.rb#L145-L158)
 
 ### Explicitly Define Defaults
-+ __Simple non-boolean defaults:__ '_||_' ([Code Sample](code_examples/chapter_3.rb#L161-166))
++ __Simple non-boolean defaults:__ '_||_' ([Code Sample](code_examples/chapter_3.rb#L161-L166))
     * Problem: you can't set an attribute to _nil_ or _false_ because the fallback value will take over.
-+ __Hash as argument with simple defaults:__ _fetch_ ([Code Sample](code_examples/chapter_3.rb#L169-174))
++ __Hash as argument with simple defaults:__ _fetch_ ([Code Sample](code_examples/chapter_3.rb#L169-L174))
     * _Fetch_ depends on the __existence__ of the key.  If the key is not present, it returns the fallback value.
         - This means that attributes can be set to _nil_ and _false_, without the fallback value taking over.
-+ __Hash as argument with complex defaults:__ _defaults method + merge_ ([Code Sample](code_examples/chapter_3.rb#L177-186))
++ __Hash as argument with complex defaults:__ _defaults method + merge_ ([Code Sample](code_examples/chapter_3.rb#L177-L186))
     * The _defaults_ method is an independent method that handles the complex logic for defaults and returns a hash.  This hash is then merged to the actual _arguments hash_.
 
 ### Isolate Multiparameter Initialization 
 For methods where you can't change the order of arguments (e.g external interfaces).
 
-+ Wrap the external interface in a _module_ whose sole purpose is to create objects from the external dependency. ([Code Sample](code_examples/chapter_3.rb#L189-209))
++ Wrap the external interface in a _module_ whose sole purpose is to create objects from the external dependency. ([Code Sample](code_examples/chapter_3.rb#L189-L209))
     * FYI: objects whose purpose is to create other objects are called _factories_.
 +  Use a _module_, __not__ a Class because you don't expect to create instances of the module.
 
@@ -187,7 +187,7 @@ For methods where you can't change the order of arguments (e.g external interfac
 Imagine the case where _KlassA_ depends on _KlassB_. This is where _KlassA_ instantiates _KlassB_ or calls methods from _KlassB_.
 
 You could write a version of the code were _KlassB_ depends con _KlassA_.
-[Gear depends on Wheel Sample](code_examples/chapter_3.rb#L2-34) / [Wheel depends on Gear Sample](code_examples/chapter_3.rb#L264-300) 
+[Gear depends on Wheel Sample](code_examples/chapter_3.rb#L2-L34) / [Wheel depends on Gear Sample](code_examples/chapter_3.rb#L264-L300) 
 
 #### Choosing Dependency Direction
 > Depend on things that change less often than you do.
@@ -372,7 +372,7 @@ _______________________________________________________________________________
 + It is not what an object _is_ that matters, it's what it _does_.
 
 ### Design in need of a Duck (Concretion) - Wrong
-[Wrong Code Example](code_examples/chapter_5.rb#L27-60)
+[Wrong Code Example](code_examples/chapter_5.rb#L27-L60)
 
 <img id="ch5_1_design_in_need_of_duck" src="/images/ch5_1_design_in_need_of_duck.png" width="400"/>
 
@@ -383,7 +383,7 @@ __What is wrong with this approach:__
 + __Sequence diagrams should always be simpler than the code they represent; when they are not, something is wrong with the design.__
 
 ### Design with Duck (Abstraction) - Right
-[Right Code Example](code_examples/chapter_5.rb#L64-99)
+[Right Code Example](code_examples/chapter_5.rb#L64-L99)
 
 <img id="ch5_2_design_with_duck" src="/images/ch5_2_design_with_duck.png" width="400"/>
 
@@ -405,9 +405,9 @@ __Things to consider:__
 ### Recognizing Hidden Ducks
 __The following coding styles are indications that you are missing a Duck:__
 
-+ Case Statements that switch on class / If Statements with .class == "KlassName" ([Example](code_examples/chapter_5.rb#L102-118))
-+ __kind_of?__ and __is_a?__ ([Example](code_examples/chapter_5.rb#L121-128))
-+ __responds_to?__ ([Example](code_examples/chapter_5.rb#L131-138))
++ Case Statements that switch on class / If Statements with .class == "KlassName" ([Example](code_examples/chapter_5.rb#L102-L118))
++ __kind_of?__ and __is_a?__ ([Example](code_examples/chapter_5.rb#L121-L128))
++ __responds_to?__ ([Example](code_examples/chapter_5.rb#L131-L138))
 
 ### Documenting Duck Types
 Tests are the best documentation. __You only need to write the tests.__
@@ -420,7 +420,7 @@ Ducks share the interface (method names) and __may__ share some code in the impl
 <!-- WIP: add link to chapter 7 -->
 
 ### Choosing Your Ducks Wisely
-Some times Ducks can exist but may not be needed. [Here is an example from the Rails Framework](code_examples/chapter_5.rb#L144-155).
+Some times Ducks can exist but may not be needed. [Here is an example from the Rails Framework](code_examples/chapter_5.rb#L144-L155).
 
 Takeaways about this example:
 
@@ -460,12 +460,12 @@ __The problem that inheritance solves:__ highly related types that share common 
 Here is a typical progression for problems that inheritance solves:
 
 + __1) Your code starts with a Concrete Class__
-    * [Here is an example of a Concrete Bicycle Class](code_examples/chapter_6.rb#L2-29).
+    * [Here is an example of a Concrete Bicycle Class](code_examples/chapter_6.rb#L2-L29).
     
 + __2) Then you start embedding multiple types into that Class__
-    *  [Here is an example of the Bicycle Class with the embedded road style bike](code_examples/chapter_6.rb#L32-68).
+    *  [Here is an example of the Bicycle Class with the embedded road style bike](code_examples/chapter_6.rb#L32-L68).
     *  Objects holding onto an instance of Bicycle may be tempted to check style before sending a message (creating a dependency).
-    *  [Spot the Antipattern](code_examples/chapter_6.rb#L46-54): _an if statetment that checks an attribute that holds the category of self to determine what message to send to self._
+    *  [Spot the Antipattern](code_examples/chapter_6.rb#L46-L54): _an if statetment that checks an attribute that holds the category of self to determine what message to send to self._
         -  __This pattern indicates a missing subclass.__
 
 + __3) Then you find the embedded types in your class__
@@ -483,7 +483,7 @@ __Some extra details about inheritance__
 >__You should never inherit from a concrete Class. Always inherit from abstract Classes.__
 
 __Abstract Class:__ disassociated from any specific instance.
-[Wrong Code Example](code_examples/chapter_6.rb#L70-98)
+[Wrong Code Example](code_examples/chapter_6.rb#L70-L98)
 <img src="/images/ch6_1_misapplying_inheritance.png" width="400"/>
 
 ## Properly Applying Inheritance
@@ -507,26 +507,26 @@ __Here is a typical process on how to build a proper inheritance strategy:__
          - Two: wait if you can. Three: will help you find the right abstraction.
          - It almost never makes sense to create an abstract superclass with only 1 subclass.
      * __Push down all__ code from the original class with mixed types (soon your __abstract superclass__) into one of the concrete classes.
-         - [Pushing down all code to one concrete class](code_examples/chapter_6.rb#L100-113) will probably [break the other concrete class.](code_examples/chapter_6.rb#L116-128) This will be fixed next.
+         - [Pushing down all code to one concrete class](code_examples/chapter_6.rb#L100-L113) will probably [break the other concrete class.](code_examples/chapter_6.rb#L116-L128) This will be fixed next.
          - Result of this step:
 
 <img src="/images/ch6_2_push_down_everything.png" height="150"/>
 
 + __2) Promoting abstract behavior while separating the abstract from the concrete__
-    * Identify behavior that is common to all specializations and __promote__ it to the __abstract superclass.__ [Example of promotion](code_examples/chapter_6.rb#L181-211)
+    * Identify behavior that is common to all specializations and __promote__ it to the __abstract superclass.__ [Example of promotion](code_examples/chapter_6.rb#L181-L211)
         - This could even requiere splitting methods that have both abstract and concrete behavior inside.
-            + [On this example](code_examples/chapter_6.rb#L277-284) _spares_ is a candidate for promotion but it _tape color_ is only applicable for the _RoadBike_ specialization. Hence, [we need to separate it](code_examples/chapter_6.rb#L287-296) and promote only the abstract (shared code).
+            + [On this example](code_examples/chapter_6.rb#L277-L284) _spares_ is a candidate for promotion but it _tape color_ is only applicable for the _RoadBike_ specialization. Hence, [we need to separate it](code_examples/chapter_6.rb#L287-L296) and promote only the abstract (shared code).
     * Why push down and then promote?
         - Consequences of promotion failures are low.
         - Consequences of wrong demotion (leaving concrete code on the superclass) are high and difficult to solve.
 
 + __3) Invite Inheritors to Supply Specializations Using the Template Method Pattern__
     * _Template method pattern_ is a technique where a _superclass_ implements and calls methods that can be overriden by the _subclasses_ to supply specialized behaviour by implementing them.
-        - [Bicycle's initilize method relies on the default_chain and default_tire_size](code_examples/chapter_6.rb#L299-341) methods. Any specialization can implement those methods to set their own defaults.
-        - [Another example of specialization with the template method pattern](code_examples/chapter_6.rb#L519-541) with the _post\_initialize_ method.
+        - [Bicycle's initilize method relies on the default_chain and default_tire_size](code_examples/chapter_6.rb#L299-L341) methods. Any specialization can implement those methods to set their own defaults.
+        - [Another example of specialization with the template method pattern](code_examples/chapter_6.rb#L519-L541) with the _post\_initialize_ method.
     * __Avoid problems downstream by implementing and documenting every template method__
-        - On [this example](code_examples/chapter_6.rb#L344-352) the _Bicycle superclass_ hasn't implemented the _default tire size_ method. A programmer is asked to create a new specialization subclass (_RecumbentBike_) but he expects _Bicycle's default tire size_ method to hande the default.  As the method is not implemented anywhere and it is not documented with a useful error, a cryptic error is raised.
-        - Any _superclass_ that uses the template method pattern must supply an implementation for every message it sends. [Even if the implementation is rasing a useful error that documents the pattern.](code_examples/chapter_6.rb#L371-383)
+        - On [this example](code_examples/chapter_6.rb#L344-L352) the _Bicycle superclass_ hasn't implemented the _default tire size_ method. A programmer is asked to create a new specialization subclass (_RecumbentBike_) but he expects _Bicycle's default tire size_ method to hande the default.  As the method is not implemented anywhere and it is not documented with a useful error, a cryptic error is raised.
+        - Any _superclass_ that uses the template method pattern must supply an implementation for every message it sends. [Even if the implementation is rasing a useful error that documents the pattern.](code_examples/chapter_6.rb#L371-L383)
   
 ## Managing Coupling Between Superclasses and Subclasses
 
@@ -540,7 +540,7 @@ The way to manage coupling is illustrated using the implementation of the _spare
 ### Understanding Coupling
 __(Coupled approach using super - Wrong)__
 
-Take a look at [this solution](code_examples/chapter_6.rb#L412-468) and notice the following:
+Take a look at [this solution](code_examples/chapter_6.rb#L412-L468) and notice the following:
 
 + _Subclasses_ rely on _super_.
     * This means the _subclass_ knows the algorithm. It depends on this knowledge.
@@ -549,20 +549,20 @@ Take a look at [this solution](code_examples/chapter_6.rb#L412-468) and notice t
     * They know that their _superclass_ implements _spares_ and that it returns a hash.
 + Pattern: know things about themselves and about their _superclass_
     * This pattern requires that _sublasses_ know how to interact with their _superclasses_.
-    * Forcing a subclass to know how to interact with their _superclass_ [can cause many problems](code_examples/chapter_6.rb#L491-517)
+    * Forcing a subclass to know how to interact with their _superclass_ [can cause many problems](code_examples/chapter_6.rb#L491-L517)
     
 ### Decoupling Subclasses Using Hook Messages
 __(Decoupled approach using hooks - Right)__
 
 > Control should be on the _Superclass_, NOT the _Subclasses_
 
-+ [Hook Example 1 - post_initialize](code_examples/chapter_6.rb#L519-541).
++ [Hook Example 1 - post_initialize](code_examples/chapter_6.rb#L519-L541).
     * Removes the _initialize_ method completely from the _subclass._
     * Eliminates _super_.
-+ [Hook Example 2 - local_spares](code_examples/chapter_6.rb#L597-617).
++ [Hook Example 2 - local_spares](code_examples/chapter_6.rb#L597-L617).
     * _RoadBike_ no longer knows that _Bicycle_ implements a spares method.
     * Eliminates _super_.
-+ [This is the final implementation of _Bicyle_ and its _Subclasses_](code_examples/chapter_6.rb#L679-744) and [this is how easy it is to create a new _subclass_](code_examples/chapter_6.rb#L747-772).
++ [This is the final implementation of _Bicyle_ and its _Subclasses_](code_examples/chapter_6.rb#L679-L744) and [this is how easy it is to create a new _subclass_](code_examples/chapter_6.rb#L747-L772).
 
 > Well-designed inheritance hierarchies are easy to extend with new subclasses, even for programmers who know very little about the application. 
 
@@ -613,18 +613,18 @@ __Here is a typical process to create a proper role strategy. The design strateg
     * __4.1) What the code does__ _(Writing the Concrete Code)_
         - Pick an arbitrary __concrete class__ (as opposed to an [abstract class](#choosing-dependency-direction)) and implement the duck
             -  i.e Type the duck directly into the concrete class. You will worry about _where the code lives_ later.
-            -  [This code](code_examples/chapter_7.rb#L12-39) and the following diagram show an example of writing the duck directly on the concrete class.
+            -  [This code](code_examples/chapter_7.rb#L12-L39) and the following diagram show an example of writing the duck directly on the concrete class.
 
 <img src="/images/ch7_3_one_target_speaks_for_itself.png" height="300"/> 
 
   * __4.2) Where the code lives__ _(Extracting the Abstraction)_
       - Bicycle is not the only thing that is _schedulable_. How to rearrange the code so that it can be shared among objects of __different classes__?
-      - [This Code](code_examples/chapter_7.rb#L52-72) shows how to extract the abstraction from the previous step into a module. 
+      - [This Code](code_examples/chapter_7.rb#L52-L72) shows how to extract the abstraction from the previous step into a module. 
           + Notice that:
               * The dependency on `Schedule` has been moved to the `Schedulable` module, isolating it.
-              * The module implements the `lead_days`  __hook__ to follow the [template method pattern](#properly-applying-inheritance). The `lead_days` hook is [overridable by any _includer_](code_examples/chapter_7.rb#L75-93) of the module.
+              * The module implements the `lead_days`  __hook__ to follow the [template method pattern](#properly-applying-inheritance). The `lead_days` hook is [overridable by any _includer_](code_examples/chapter_7.rb#L75-L93) of the module.
                   - Just as with classical inheritance, modules must implement every __template method pattern__ (even if it only raises an error).
-              * [Other objects can play the `Schedulable` role by including the module without duplicating the code](code_examples/chapter_7.rb#L96-127). The current implemantation looks as follows:
+              * [Other objects can play the `Schedulable` role by including the module without duplicating the code](code_examples/chapter_7.rb#L96-L127). The current implemantation looks as follows:
 
 <img src="/images/ch7_4_the_schedulable_duck_type.png" height="300"/> 
 _______________________________________________________________________________
@@ -705,22 +705,22 @@ _______________________________________________________________________________
 
 >In composition the larger object is connected to its parts via a _has-a_ relationship (A Bicycle has parts). __Part__ is a role and bicycles are happy to collaborate with any object that plays the role.
 
-__This chapter shows how to replace gradually a inheritance design with composition.__
+__This chapter shows how to replace gradually an inheritance design with composition.__
 
 ## Step 1) Compose `Parts` into a Bicycle
 
 + If you create an object to hold all of a bicycle's parts (i.e a `Parts` object), you could delegate the spares message to that new object ([See this line of code](code_examples/chapter_8.rb#L10)). 
-+  [This code](code_examples/chapter_8.rb#L2-13) shows how to turn a Bicycle into a composed object.
++  [This code](code_examples/chapter_8.rb#L2-L13) shows how to turn a Bicycle into a composed object.
     *  Bicycle is now responsible for 3 things: knowing it's size, holding on to it's `Parts` and answering spares.
 
 ## Step 2) Moving the parts logic into the `Parts`class
 
-+ [This first coding approach](code_examples/chapter_8.rb#L16-79) is temporal as it still relies con inheritance to work.
++ [This first coding approach](code_examples/chapter_8.rb#L16-L79) is temporal as it still relies con inheritance to work.
 + Pros: made obvious how little `Bicycle` specific code there was.
 + Cons: still uses inheritance for the specialization of `Parts`.
 + The following diagram depicts the design strategy up to this point.
 
-<img src="/images/ch8_1_step_2_design.png" height="300"/> 
+<img src="/images/ch8_1_step_2_design.png" height="220"/> 
 
 ## Step 3) Composing the `Parts`object with `Part`objects
 
@@ -731,9 +731,9 @@ The folowing diagram illustrates the final strategy that is going to get built. 
 <img src="/images/ch8_1_step_3_final_design.png" height="300"/> 
 
 ### Step 3.1) Creating a `Part` object
-[This code](code_examples/chapter_8.rb#L107-140) shows the creation of the new `Part` class and the corresponding refactor on the `Parts` class.
+[This code](code_examples/chapter_8.rb#L107-L140) shows the creation of the new `Part` class and the corresponding refactor on the `Parts` class.
 
-[Here](code_examples/chapter_8.rb#L143-204) you can see how the previous code can be used to create `Part` objects, sets of  `Part` objects for each bicycle configuration and `Bicycle` objects.
+[Here](code_examples/chapter_8.rb#L143-L204) you can see how the previous code can be used to create `Part` objects, sets of  `Part` objects for each bicycle configuration and `Bicycle` objects.
 
 __Avoid this pitfall__
 
@@ -747,7 +747,7 @@ __Avoid this pitfall__
      mountain_bike.parts # returns a Parts object
      ```
 
-     * This causes [weird behaviour](code_examples/chapter_8.rb#L207-210) when using them.
+     * This causes [weird behaviour](code_examples/chapter_8.rb#L207-L210) when using them.
 
 ### Step 3.2) Making the `Parts` Object More Like an Array
 
