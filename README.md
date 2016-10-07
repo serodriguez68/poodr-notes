@@ -715,7 +715,7 @@ __This chapter shows how to replace gradually an inheritance design with composi
 
 ## Step 2) Moving the parts logic into the `Parts`class
 
-+ [This first coding approach](code_examples/chapter_8.rb#L16-L79) is temporal as it still relies con inheritance to work.
++ [This first coding approach](code_examples/chapter_8.rb#L16-L79) is temporal as it still relies on inheritance to work.
 + Pros: made obvious how little `Bicycle` specific code there was.
 + Cons: still uses inheritance for the specialization of `Parts`.
 + The following diagram depicts the design strategy up to this point.
@@ -726,9 +726,9 @@ __This chapter shows how to replace gradually an inheritance design with composi
 
 >There will be a `Parts` object and it will contain many `Part` objects.
 
-The folowing diagram illustrates the final strategy that is going to get built. Notice that inheritance dissappears. 
+The following diagram illustrates the final strategy that is going to get built. Notice that inheritance dissappears. 
 
-<img src="/images/ch8_1_step_3_final_design.png" height="300"/> 
+<img src="/images/ch8_1_step_3_final_design.png" height="450"/> 
 
 ### Step 3.1) Creating a `Part` object
 [This code](code_examples/chapter_8.rb#L107-L140) shows the creation of the new `Part` class and the corresponding refactor on the `Parts` class.
@@ -750,6 +750,37 @@ __Avoid this pitfall__
      * This causes [weird behaviour](code_examples/chapter_8.rb#L207-L210) when using them.
 
 ### Step 3.2) Making the `Parts` Object More Like an Array
+
+__This chapter will explore 4 different approaches to deal with the aforementioned weird behavior.__
+
++ __Approach 1: Leave as is and accept the lack of array-like behavior__
+    * Pros: As simple as it gets.
+    * Cons: Limited use.
+    *
++ __Approach 2: Emulate the array-like behavior that is needed by [adding methods to the `Parts` Class](code_examples/chapter_8.rb#L213-L215)__
+    * Pros: Simple solution if you need limited array-like behavior.
+    * Cons: Slippery slope path. Soon you will be adding `each` and `sort` (and more array behavior).
+    
++ __Approach 3: [Subclass Array](code_examples/chapter_8.rb#L218-L222)__
+    * Pros: Straight forward solution that adds all array-like behavior.
+        - Use this if you are certain that you will never encounter confusing errors.
+    * Cons: [Confusing errors](code_examples/chapter_8.rb#L225-L241) can arise from `Array` methods that return arrays instead of the subclassed `Parts` object.
+        - Many methods in the `Àrray` class return arrays.
+        - In __approach 1__ a `Parts` object could not respond to `size`.  In this approach the addition of to `Parts` objects cannot respond to `spares`.
+        
++ __Approach 4: [Use Delegation and Enumerable](code_examples/chapter_8.rb#L244-L257)__
+    * __Forwardable:__ is a ruby module that allows you to forward a message to a designated object. [More info in the Ruby Doc.](http://ruby-doc.org/stdlib-2.0.0/libdoc/forwardable/rdoc/Forwardable.html)
+        - For example, `def_delegators :@parts, :size, :each` means that whenever `size` or `each` is sent to a `Parts` object,  the message will be forwared to it's `@parts` (i.e `@parts.size` and `@parts.each`).
+        - Classes are usually [extended](#chapter-7b-how-does-ruby-method-look-up-works) with `Forwardable`.
+    * __Enumerable:__ is a ruby module that when mixed into a collection class, provides it's instances (e.g a `Parts` object) __several transversal, searching and sorting methods.__ [More info in the Ruby Doc.](http://ruby-doc.org/core-2.3.1/Enumerable.html)
+        - Enumerable is usually [included](#chapter-7b-how-does-ruby-method-look-up-works) into collection classes (e.g the `Parts` class).
+    * [This example](code_examples/chapter_8.rb#L322-L331) shows that both `spares` and a `Parts` object respond to `size`.
+    * Pros: 
+        -  Middle ground between complexity and usability.
+        -  Responds to all `Enumerable` methods.
+        -  [Raises errors when a `Parts` object is treated like an array.](code_examples/chapter_8.rb#L334-L336)
+    * Cons:
+        - The code may be complex for new developers.
 
 # Chapter 8.2 - Composition vs Inheritance
 
