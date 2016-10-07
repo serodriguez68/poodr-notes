@@ -699,4 +699,59 @@ __Warning:__ Hook methods only solve the problem of sending `super` for adjacent
 <img src="/images/ch7_8_shapes_of_hierarchies.png" height="300"/> 
 _______________________________________________________________________________
 
-# Chapter 8 - Combining Objects with Composition
+# Chapter 8.1 - Combining Objects with Composition
+
+>Combining different parts into a complex whole such that te whole becomes more than the sum of it's parts.
+
+>In composition the larger object is connected to its parts via a _has-a_ relationship (A Bicycle has parts). __Part__ is a role and bicycles are happy to collaborate with any object that plays the role.
+
+__This chapter shows how to replace gradually a inheritance design with composition.__
+
+## Step 1) Compose `Parts` into a Bicycle
+
++ If you create an object to hold all of a bicycle's parts (i.e a `Parts` object), you could delegate the spares message to that new object ([See this line of code](code_examples/chapter_8.rb#L10)). 
++  [This code](code_examples/chapter_8.rb#L2-13) shows how to turn a Bicycle into a composed object.
+    *  Bicycle is now responsible for 3 things: knowing it's size, holding on to it's `Parts` and answering spares.
+
+## Step 2) Moving the parts logic into the `Parts`class
+
++ [This first coding approach](code_examples/chapter_8.rb#L16-79) is temporal as it still relies con inheritance to work.
++ Pros: made obvious how little `Bicycle` specific code there was.
++ Cons: still uses inheritance for the specialization of `Parts`.
++ The following diagram depicts the design strategy up to this point.
+
+<img src="/images/ch8_1_step_2_design.png" height="300"/> 
+
+## Step 3) Composing the `Parts`object with `Part`objects
+
+>There will be a `Parts` object and it will contain many `Part` objects.
+
+The folowing diagram illustrates the final strategy that is going to get built. Notice that inheritance dissappears. 
+
+<img src="/images/ch8_1_step_3_final_design.png" height="300"/> 
+
+### Step 3.1) Creating a `Part` object
+[This code](code_examples/chapter_8.rb#L107-140) shows the creation of the new `Part` class and the corresponding refactor on the `Parts` class.
+
+[Here](code_examples/chapter_8.rb#L143-204) you can see how the previous code can be used to create `Part` objects, sets of  `Part` objects for each bicycle configuration and `Bicycle` objects.
+
+__Avoid this pitfall__
+
+> While it may be tempting to think of these objects as instances of `Part`, composition tells you to think of them as objects that play the `Part` role. They don’t have to be a kind-of the `Part` class, they just have to act like one; that is, they must respond to `name`, `description`, and `needs_spare`.
+
+ + Cons:
+     * The `Bicycle`'s methods `spares` and `parts` behave weird because they return different sort of things.
+     
+     ```ruby
+     mountain_bike.spares # returns an array of Part objects
+     mountain_bike.parts # returns a Parts object
+     ```
+
+     * This causes [weird behaviour](code_examples/chapter_8.rb#L207-210) when using them.
+
+### Step 3.2) Making the `Parts` Object More Like an Array
+
+# Chapter 8.2 - Composition vs Inheritance
+
+# Chapter 8.3 - Tips on how to choose between design strategies
+__Applies for chapters 5 through 8.__
