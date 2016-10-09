@@ -815,6 +815,17 @@ __A _factory_ is an object whose only purpose is to manufacture other objects.__
     *  The `PartsFactory` should be the __only responsible__ for manufacturing `Parts`.
     *  [Here is how this version of the factory works](code_examples/chapter_8.rb#L413-L421).
 
+### Step 5) Wrapping Up- The Composed Bicycle Overview
+This section shows how all the code written from step 1 to step 4 works together. No new code is introduced.
+
++ [This 54 lines of code](code_examples/chapter_8.rb#L423-L476) replace the 66 lines required for the inheritance strategy.  Important thinks to keep in mind:
+    * `Bicycle` _has-a_ `Parts`, which in turns `has-a` collection of `Part` objects.
+    * `Parts` and `Part` may exist as classes. However the important thing is that someone plays the `Parts` and `Part` __role (think of them as roles).__
+        - In this example `Parts` class plays the `Parts`role (it implements spares.) The role of `Part` is played by an `OpenStruct`(implements `name, description` and `need_spares`).
++ [Here is how you use this code to create a specific type of bike](code_examples/chapter_8.rb#L479-L494).
++ [Here is how you create a completely new type of bike (with 3 lines!)](code_examples/chapter_8.rb#L496-L519).
+    * __You only need to describe the new type of bike's parts__
+
 # Chapter 8.2 - Composition vs Inheritance
 
 # Chapter 8.3 - Tips on how to choose between design strategies
