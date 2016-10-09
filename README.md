@@ -782,6 +782,39 @@ __This chapter will explore 4 different approaches to deal with the aforemention
     * Cons:
         - The code may be complex for new developers.
 
+## Step 4) Manufacturing Parts (with Factories)
+__Problem__
+Look at  [these lines](code_examples/chapter_8.rb#L322-L328). These 4 lines represent a big __knowledge dependency__ on how to create the appropiate `Part` objects for a specific Bicycle. This dependency can spread through your app.
+
+__The solution is given incrementally on the following steps.__
+
+### Step 4.1) There are only a few valid combination of `Part` objects. [Centralize that knowledge in one place](code_examples/chapter_8.rb#L339-L348).
+
+### Step 4.2) Create the `PartsFactory`
+__A _factory_ is an object whose only purpose is to manufacture other objects.__
+
+> [This code](code_examples/chapter_8.rb#L351-L363) shows a new PartsFactory module. Its job is to take an array like one of those listed above and manufacture a Parts object. Along the way it may well create Part objects, but this action is private. Its public responsibility is to create a Parts. 
+
++ The factory takes 3 arguments: 
+    *  1) [Config array](#step-41-there-are-only-a-few-valid-combination-of-part-objects-centralize-that-knowledge-in-one-place)
+    *  2 & 3) Name of the classes to be used for creating `Part` objects and the `Parts` object.
++  __Pros:__
+    *  Creating a `Parts` object with proper configuration for a specific bike [is easy](code_examples/chapter_8.rb#L366-L375).
+    *  Your knowledge is centralized. You should __always__ new `Parts` objects using the factory.
++  __Cons:__
+    *  Although all the code up to this point __works perfectly,__ the `Part` class [has become so simple](code_examples/chapter_8.rb#L385-L393) after all this refactoring that it may not be necessary at all.
+
+### Step 4.2) Leveraging the `PartsFactory` to remove the `Part` class
+> If the `PartsFactory` created every part, the `Part` class would not be necessary. This would simplify the code.
+
++ The `Part` class can be replaced by an `OpenStruct`.
+    * `OpenStruct` is a lot like `Struct`. It provides a convenient way to bundle a number of attributes into an object (without creatin a class).
+        - `OpenStruct` takes a hash for initialization while `Struct` takes position order initialiation arguments.
++ [This code](code_examples/chapter_8.rb#L396-L410) shows a refactored version of the `PartsFactory` where the `Part` creation was moved into the factory using `OpenStruct` and the `Part` class was deleted.
+    *  [This code](code_examples/chapter_8.rb#L408) is the only place in the app where `need_spares` defaults to true.
+    *  The `PartsFactory` should be the __only responsible__ for manufacturing `Parts`.
+    *  [Here is how this version of the factory works](code_examples/chapter_8.rb#L413-L421).
+
 # Chapter 8.2 - Composition vs Inheritance
 
 # Chapter 8.3 - Tips on how to choose between design strategies
