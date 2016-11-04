@@ -756,7 +756,7 @@ __This chapter will explore 4 different approaches to deal with the aforemention
 + __Approach 1: Leave as is and accept the lack of array-like behavior__
     * Pros: As simple as it gets.
     * Cons: Limited use.
-    *
+    
 + __Approach 2: Emulate the array-like behavior that is needed by [adding methods to the `Parts` Class](code_examples/chapter_8.rb#L213-L215)__
     * Pros: Simple solution if you need limited array-like behavior.
     * Cons: Slippery slope path. Soon you will be adding `each` and `sort` (and more array behavior).
@@ -772,8 +772,10 @@ __This chapter will explore 4 different approaches to deal with the aforemention
     * __Forwardable:__ is a ruby module that allows you to forward a message to a designated object. [More info in the Ruby Doc.](http://ruby-doc.org/stdlib-2.0.0/libdoc/forwardable/rdoc/Forwardable.html)
         - For example, `def_delegators :@parts, :size, :each` means that whenever `size` or `each` is sent to a `Parts` object,  the message will be forwared to it's `@parts` (i.e `@parts.size` and `@parts.each`).
         - Classes are usually [extended](#chapter-7b-how-does-ruby-method-look-up-works) with `Forwardable`.
-    * __Enumerable:__ is a ruby module that when mixed into a collection class, provides it's instances (e.g a `Parts` object) __several transversal, searching and sorting methods.__ [More info in the Ruby Doc.](http://ruby-doc.org/core-2.3.1/Enumerable.html)
+    * __Enumerable:__ is a ruby module that when mixed into a collection class, provides it's instances (e.g a `Parts` object) __several transversal, searching and sorting methods.__ [More info in the Ruby Doc](http://ruby-doc.org/core-2.3.1/Enumerable.html) or on [this link.](https://www.sitepoint.com/guide-ruby-collections-iii-enumerable-enumerator/)
         - Enumerable is usually [included](#chapter-7b-how-does-ruby-method-look-up-works) into collection classes (e.g the `Parts` class).
+        - The class that includes `Enumerable` must implement an `each` that yields successive members of the collection.
+        - On this example `each` in the `Parts` class is 'implemented' by forwarding it to it's `@parts` attribute.
     * [This example](code_examples/chapter_8.rb#L322-L331) shows that both `spares` and a `Parts` object respond to `size`.
     * Pros: 
         -  Middle ground between complexity and usability.
