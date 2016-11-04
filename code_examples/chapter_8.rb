@@ -244,12 +244,7 @@ combo_parts.class           # -> Array !!!
 require 'forwardable'
 class Parts
   extend Forwardable
-  # .size and .each are forwarded to @parts.size and @parts.each
   def_delegators :@parts, :size, :each
-
-  # Enumerable requires Parts to implement #each. #each is implemented by
-  # forwarding it to @parts.each
-  # Enumerable gives Parts many transversal an searching methods for collections
   include Enumerable
 
   def initialize(parts)
@@ -257,8 +252,6 @@ class Parts
   end
 
   def spares
-    # #select is included in Parts through Enumerable. Enumerable in turn
-    # depends on #each, which is forwarded to @parts
     select {|part| part.needs_spare}
   end
 end

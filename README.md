@@ -786,7 +786,7 @@ __This chapter will explore 4 different approaches to deal with the aforemention
 
 ## Step 4) Manufacturing Parts (with Factories)
 __Problem__
-Look at  [these lines](code_examples/chapter_8.rb#L332-L335). These 4 lines represent a big __knowledge dependency__ on how to create the appropiate `Part` objects for a specific Bicycle. This dependency can spread through your app.
+Look at  [these lines](code_examples/chapter_8.rb#L322-L328). These 4 lines represent a big __knowledge dependency__ on how to create the appropiate `Part` objects for a specific Bicycle. This dependency can spread through your app.
 
 __The solution is given incrementally on the following steps.__
 
