@@ -871,10 +871,10 @@ Take into account the pros and cons of each strategy to help you decide.
 + Inheritance by definition comes with a deeply embedded set of dependencies.
 + __The cost of being wrong when designing an inheritance hierarchy is very high.__ (ask yourself _What will happen if I'm wrong?_)
 
-#### Tips when deciding if inheritance
+#### Tips when deciding if inheritance is right
 + Your decission should be influenced by the expectations of the population that will use your code.
-    * > If writing code for an in-house app in a domain you are familiar, you may be able to predict the future well-enough to be confident that your design problem is one for which inheritance is a cost-effective solution.
-    * If you write code for a wider audience, suitability of inheritance goes down.
+    * In-house app team & You are familiar with the domain ->  you may be able to predict the future well-enough to be confident that your design problem is one for which inheritance is a cost-effective solution.
+    * If you write code for a wider audience  -> suitability of inheritance goes down.
 + __Avoid writing framewors that require users of your code to subclass your objects in order to gain your behavior.__ Their apps may already use inheritance so inheriting from your framework may not be possible.
 
 ### Pros and Cons of Composition
