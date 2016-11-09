@@ -786,7 +786,7 @@ __This chapter will explore 4 different approaches to deal with the aforemention
 
 ## Step 4) Manufacturing Parts (with Factories)
 __Problem__
-Look at  [these lines](code_examples/chapter_8.rb#L322-L328). These 4 lines represent a big __knowledge dependency__ on how to create the appropiate `Part` objects for a specific Bicycle. This dependency can spread through your app.
+Look at  [these lines](code_examples/chapter_8.rb#L325-L328). These 4 lines represent a big __knowledge dependency__ on how to create the appropiate `Part` objects for a specific Bicycle. This dependency can spread through your app.
 
 __The solution is given incrementally on the following steps.__
 
@@ -802,7 +802,7 @@ __A _factory_ is an object whose only purpose is to manufacture other objects.__
     *  2 & 3) Name of the classes to be used for creating `Part` objects and the `Parts` object.
 +  __Pros:__
     *  Creating a `Parts` object with proper configuration for a specific bike [is easy](code_examples/chapter_8.rb#L366-L375).
-    *  Your knowledge is centralized. You should __always__ new `Parts` objects using the factory.
+    *  Your knowledge is centralized. You should __always__ create new `Parts` objects using the factory.
 +  __Cons:__
     *  Although all the code up to this point __works perfectly,__ the `Part` class [has become so simple](code_examples/chapter_8.rb#L385-L393) after all this refactoring that it may not be necessary at all.
 
@@ -828,7 +828,58 @@ This section shows how all the code written from step 1 to step 4 works together
 + [Here is how you create a completely new type of bike (with 3 lines!)](code_examples/chapter_8.rb#L496-L519).
     * __You only need to describe the new type of bike's parts__
 
-# Chapter 8.2 - Composition vs Inheritance
+# Chapter 8.2 - A more strict definition of composition
+__Aggregation: A Special Kind of Composition__
 
-# Chapter 8.3 - Tips on how to choose between design strategies
++ __Broad definition of composition__
+    * _has-a_ relationship.
+    * Meals have appetizers, departments have professors.
+        - Meals and departments are __composed objects__.
+        - Appetizers and professors are __roles__.
+        - __Composed objects__ depend on the interface of the __role.__
+        - New objects that want to act as appetizers only need to implement the appetizer interface.
+        
++ __Strict definition of composition__
+    * _has-a_ relationship where the contained object __has NO life independent of its container__ (the composed object).
+    * _e.g when the meal is eaten, the appetizer is also gone._
+    
++ __Strict definition of aggregation__
+    * _has-a_ relationship where the contained object can exist __independent of its container.__
+    * _e.g departments have professors.  When the department is gone, the professors continue to exist._
+
+# Chapter 8.3 - Composition vs Inheritance
+## Short Answer
+>If you cannot explicitly defend inheritance as a better solution, __use composition__. Composition contains far fewer built-in dependencies than inheritance; it is very often the best choice.
+
+>Inheritance is a better solution when its use provides high rewards for low risk.
+
+## Long Answer
+Take into account the pros and cons of each strategy to help you decide.
+### Pros and Cons of Inheritance
+#### Pros
++ Big changes in behavior can be achieved via small changes in code.
+    * If you change the methods that are defined at the top of the hierarchy.
++ Inheritance hierarchies are _open-closed_ (open for extension and closed for modification.)
+    * You can easily create new subclasses to accomodate new variants.
++ Inheritance hierarchies are easy to follow (_exemplary_) for other developers as they are very explicit.
+
+#### Cons
++ Small changes can break everything.
+    * If you change the methods that are defined at the top of the hierarchy.
++ You can't extend behavior when a new subclass is a __mixture of existing types__ (_e.g you can't model a recumbent mountain bike from a mountain bike and a recumbent bike_).
++ Chaos arises when novice programmers attempt to extend incorrectly modeled hierarchies.
++ Inheritance by definition comes with a deeply embedded set of dependencies.
++ __The cost of being wrong when designing an inheritance hierarchy is very high.__ (ask yourself _What will happen if I'm wrong?_)
+
+#### Tips when deciding if inheritance
++ Your decission should be influenced by the expectations of the population that will use your code.
+    * > If writing code for an in-house app in a domain you are familiar, you may be able to predict the future well-enough to be confident that your design problem is one for which inheritance is a cost-effective solution.
+    * If you write code for a wider audience, suitability of inheritance goes down.
++ __Avoid writing framewors that require users of your code to subclass your objects in order to gain your behavior.__ Their apps may already use inheritance so inheriting from your framework may not be possible.
+
+### Pros and Cons of Composition
+#### Pros
+#### Cons
+
+# Chapter 8.4 - Tips on how to choose between design strategies
 __Applies for chapters 5 through 8.__
