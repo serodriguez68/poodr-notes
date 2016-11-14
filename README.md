@@ -897,4 +897,28 @@ composition provides no way to share this code.
 
 # Chapter 8.4 - Tips on how to choose between design strategies
 __Applies for chapters 5 through 8.__
+> The trick to lowering your application costs is to apply each technique to the right problem.
 
+## Use Inheritance for _is-a_  Relationships
+Example: 
+Imagine your are modelling an app where users can buy six different types of _shocks_ for their bikes.
+
+Different _shocks_ are much mure alike than they are different and they are certainly all _shocks_. 
+
+_Shocks_ can be modelled using a shallow and narrow hierarchy.
+
+>If requirements change such that there is an explosion in the kinds of shocks, reassess this design decision. Perhaps it still holds, perhaps not. If modeling a bevy of new shocks requires dramatically expanding the hierarchy, or if the new shocks don’t conveniently fit into the existing code, reconsider alternatives _at that time._
+
+## Use Duck Types for _behaves-like-a_ Relationships
++ __2 keys for recognizing the existence of a role__
+    * 1. Although an object plays it, the _role_ is not the object’s main responsibility.
+        - A bicycle behaves-like-a schedulable but it _is-a_ bicycle
+    * 2. The need is widespread; many otherwise unrelated objects share a desire to play the same role.
++ Some roles consist only of their interface, others share common behavior. Define the com- mon behavior in a Ruby module to allow objects to play the role without duplicating the code.
+
+## Use Composition for _has-a_ Relationships
+
++ When objects have numerous parts but are more than the sum of those parts.
++ The _is-a_ versus _has-a_ distinction is at the core of deciding between inheritance and composition. 
+    * The more parts an object has, the more likely it is that it should be modeled with composition.
+    * The deeper you drill down into individual parts, the more likely it is that you’ll discover a specific part that has a few specialized variants and is thus a reasonable candidate for inheritance ([see the shocks example.](#use-inheritance-for-is-a-relationships))
