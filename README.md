@@ -873,13 +873,28 @@ Take into account the pros and cons of each strategy to help you decide.
 
 #### Tips when deciding if inheritance is right
 + Your decission should be influenced by the expectations of the population that will use your code.
-    * In-house app team & You are familiar with the domain ->  you may be able to predict the future well-enough to be confident that your design problem is one for which inheritance is a cost-effective solution.
+    * If in-house app team & You are familiar with the domain ->  you may be able to predict the future well-enough to be confident that your design problem is one for which inheritance is a cost-effective solution.
     * If you write code for a wider audience  -> suitability of inheritance goes down.
 + __Avoid writing framewors that require users of your code to subclass your objects in order to gain your behavior.__ Their apps may already use inheritance so inheriting from your framework may not be possible.
 
 ### Pros and Cons of Composition
 #### Pros
+
++ Composition produces small, structurally independent objects with __single responsibilites__ and well-defined interfaces.
+    * Also, objects specify their own behavior (Leading to code that is easy to understand).
+    * Objects are easily pluggable and interchanged.
++ Composed objects are independent from a hierarchy.
+    * Objects are  are generally __inmune from suffering side effects__ derived from changes to other objects.
++ Because composed objects deal with their parts via an interface, adding a new kind of part is a simple matter of __plugging in a new object that honors the interface.__
+
 #### Cons
+
++ A composed object relies on its many parts. Even if each part is small and easily understood, __the combined operation of the whole may be less than obvious.__
++ The benefits of structural independence are gained at the cost of automatic message delegation. The composed object must explicitly know which messages to delegate and to whom.
++ Identical delegation code many be needed by many different objects;
+composition provides no way to share this code.
++  Not suitable for arranging code for a collection of parts that are very nearly identical.
 
 # Chapter 8.4 - Tips on how to choose between design strategies
 __Applies for chapters 5 through 8.__
+
