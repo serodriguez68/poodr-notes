@@ -115,7 +115,7 @@ _______________________________________________________________________________
 ## Recognizing Dependencies
 An object has a dependency when it knows ([See example code](code_examples/chapter_3.rb#L2-L34)): 
 
-1. The name of another class. _(Gear expects a class named Wheet to exist.)_
+1. The name of another class. _(Gear expects a class named Wheel to exist.)_
     * Solution strategy 1: __[Inject Dependencies](#inject-dependencies)__
     * Solution strategy 2: __[Isolate Instance Creation](#isolate-instance-creation)__
 2. The name of the message that it intends to send to someone other than self. (_Gear expects a Wheel instance to respond to diameter_).
